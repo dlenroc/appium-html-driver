@@ -1,4 +1,4 @@
-import type { Rect } from '@appium/base-driver';
+import type { Rect } from '@appium/types';
 import type { Driver } from '../Driver';
 
 export function getWindowRect(this: Driver): Rect {

@@ -1,4 +1,4 @@
-import type { Element } from '@appium/base-driver';
+import type { Element } from '@appium/types';
 import type { Driver } from '../Driver';
 import { InvalidArgument, NoSuchFrame } from '../Errors';
 import { fromWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element';

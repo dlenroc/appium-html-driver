@@ -1,4 +1,4 @@
-import type { Rect } from '@appium/base-driver';
+import type { Rect } from '@appium/types';
 import type { Driver } from '../Driver';
 import { InvalidArgument } from '../Errors';
 

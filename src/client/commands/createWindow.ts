@@ -1,4 +1,6 @@
-import type { WindowHandle } from '@appium/base-driver';
+/// <reference path='../../../types/appium-types.d.ts'/>
+
+import type { WindowHandle } from '@appium/types';
 import { v4 as uuid } from 'uuid';
 import type { Driver } from '../Driver';
 import { InvalidArgument } from '../Errors';

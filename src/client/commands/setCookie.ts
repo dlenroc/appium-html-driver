@@ -1,4 +1,4 @@
-import type { Cookie } from '@appium/base-driver';
+import type { Cookie } from '@appium/types';
 import type { Driver } from '../Driver';
 import { InvalidArgument } from '../Errors';
 

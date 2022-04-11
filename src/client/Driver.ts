@@ -1,5 +1,3 @@
-/// <reference path='../../types/base-driver.d.ts'/>
-
 import type { Socket } from 'socket.io-client';
 import { io } from 'socket.io-client';
 import { v4 as uuid } from 'uuid';

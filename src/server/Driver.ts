@@ -1,5 +1,3 @@
-/// <reference path='../../types/base-driver.d.ts'/>
-
 import { BaseDriver } from '@appium/base-driver';
 import type { Namespace } from 'socket.io';
 import { closeWindow } from './commands/closeWindow';

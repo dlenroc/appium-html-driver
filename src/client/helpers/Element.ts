@@ -1,4 +1,4 @@
-import type { Element as WebDriverElement } from '@appium/base-driver';
+import type { Element as WebDriverElement } from '@appium/types';
 import { v4 as uuid } from 'uuid';
 import { StaleElementReference } from '../Errors';
 
