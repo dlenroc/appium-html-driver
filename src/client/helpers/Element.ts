@@ -8,7 +8,7 @@ export const WEB_ELEMENT_IDENTIFIER: 'element-6066-11e4-a52e-4f735466cecf' = 'el
 
 export function fromWebDriverElement(id: string): HTMLElement {
   const element = ELEMENTS[id];
-  if (!element || !element.isConnected) {
+  if (!element || !element.ownerDocument.contains(element)) {
     throw StaleElementReference(`element is no longer attached to the DOM or belongs to another window`);
   }
 
