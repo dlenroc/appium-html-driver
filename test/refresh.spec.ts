@@ -1,4 +1,3 @@
-import { setTimeout } from 'timers/promises';
 import { HOME_PAGE, inline, startBrowser } from './_base';
 
 describe('refresh', () => {
@@ -10,7 +9,8 @@ describe('refresh', () => {
 
     await driver.refresh();
 
-    await setTimeout(1e3); // wait page to refresh
+    // wait page to refresh
+    await new Promise(resolve => setTimeout(resolve, 1e3));
 
     await driver.executeScript('return window.noReloaded || location.href', [])
       .should.eventually.be.equal(url);
