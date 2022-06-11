@@ -1,13 +1,12 @@
 import type { Element } from '@appium/types';
-import type { Driver } from '../Driver';
-import { InvalidArgument, NoSuchFrame } from '../Errors';
-import { fromWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element';
+import { InvalidArgument } from '../errors/InvalidArgument';
+import { NoSuchFrame } from '../errors/NoSuchFrame';
+import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element';
 
-export function setFrame(this: Driver, id: null | number | string | Element): void {
+export function setFrame(id: null | number | string | Element): any {
   // switch to main frame
   if (id === null) {
-    this.context = this.topContext;
-    return;
+    return null;
   }
 
   // switch to frame by index
@@ -16,22 +15,20 @@ export function setFrame(this: Driver, id: null | number | string | Element): vo
       throw InvalidArgument(`index must be a non-negative integer`);
     }
 
-    const frames = this.context.frames;
+    const frames = window.frames;
     if (id >= frames.length) {
       throw NoSuchFrame(`frame with index ${id} does not exist`);
     }
 
-    this.context = frames[id].window;
-    return;
+    return toWebDriverElement(frames[id].frameElement as unknown as HTMLElement);
   }
 
   // switch to frame by name
   if (typeof id === 'string') {
-    const frames = this.context.frames;
+    const frames = window.frames;
     for (let i = 0; i < frames.length; i++) {
       if (frames[i].name === id) {
-        this.context = frames[i].window;
-        return;
+        return toWebDriverElement(frames[i].frameElement as unknown as HTMLElement);
       }
     }
 
@@ -45,8 +42,7 @@ export function setFrame(this: Driver, id: null | number | string | Element): vo
       throw NoSuchFrame(`element is not a frame`);
     }
 
-    this.context = element.contentWindow!;
-    return;
+    return toWebDriverElement(element);
   }
 
   throw InvalidArgument(`invalid frame identifier: ${id}`);

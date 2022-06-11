@@ -1,5 +1,3 @@
-import type { Driver } from '../Driver';
-
-export function refresh(this: Driver): void {
-  this.topContext.location.reload();
+export function refresh(): void {
+  window.location.reload();
 }

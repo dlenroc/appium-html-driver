@@ -1,17 +1,19 @@
 import { BaseDriver } from '@appium/base-driver';
-import type { Namespace } from 'socket.io';
+import type { Element, ExternalDriver } from '@appium/types';
+import { RemoteDevice } from './adapters/RemoteDevice';
 import { closeWindow } from './commands/closeWindow';
 import { createSession } from './commands/createSession';
 import { createWindow } from './commands/createWindow';
 import { getTimeouts } from './commands/getTimeouts';
 import { getWindowHandle } from './commands/getWindowHandle';
 import { getWindowHandles } from './commands/getWindowHandles';
-import { refresh } from './commands/refresh';
+import { setFrame } from './commands/setFrame';
+import { setParentFrame } from './commands/setParentFrame';
 import { setWindow } from './commands/setWindow';
 import { timeouts } from './commands/timeouts';
 import { remote } from './helpers/remote';
 
-export class Driver extends BaseDriver {
+export class Driver extends BaseDriver implements ExternalDriver {
   static newMethodMap = {
     '/session/:sessionId/frame/parent': {
       POST: { command: 'setParentFrame' },
@@ -22,8 +24,8 @@ export class Driver extends BaseDriver {
   };
 
   // Connections
-  protected handle?: string;
-  protected namespace!: Namespace;
+  protected remote!: RemoteDevice;
+  protected frames: Element[] = [];
 
   // Configurations
   public implicitWaitMs = 0;
@@ -36,20 +38,21 @@ export class Driver extends BaseDriver {
   // WebDriver Commands
   public createSession = createSession.bind(this, super.createSession.bind(this));
   public getTimeouts = getTimeouts;
+  // @ts-ignore w3c command
   public timeouts = timeouts;
   public setUrl = remote('setUrl', { requireWindow: true, noWait: true });
   public getUrl = remote('getUrl', { requireWindow: true });
   public back = remote('back', { requireWindow: true, noWait: true });
   public forward = remote('forward', { requireWindow: true, noWait: true });
-  public refresh = refresh;
+  public refresh = remote('refresh', { requireWindow: true, noWait: true });
   public title = remote('title', { requireWindow: true });
   public getWindowHandle = getWindowHandle;
   public closeWindow = closeWindow;
   public createWindow = createWindow;
   public setWindow = setWindow;
   public getWindowHandles = getWindowHandles;
-  public setFrame = remote('setFrame');
-  public setParentFrame = remote('setParentFrame');
+  public setFrame = setFrame;
+  public setParentFrame = setParentFrame;
   public getWindowRect = remote('getWindowRect', { requireWindow: true });
   public setWindowRect = remote('setWindowRect', { requireWindow: true });
   public maximizeWindow = remote('maximizeWindow', { requireWindow: true });
@@ -78,12 +81,9 @@ export class Driver extends BaseDriver {
 
   public get desiredCapConstraints() {
     return {
-      udid: {
+      debuggingAddress: {
         isString: true,
         presence: true,
-      },
-      handle: {
-        isString: true,
       },
     };
   }

@@ -1,5 +1,3 @@
-import type { Driver } from '../Driver';
-
-export function forward(this: Driver): void {
-  this.topContext.history.forward();
+export function forward(): void {
+  window.history.forward();
 }

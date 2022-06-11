@@ -1,5 +1,5 @@
 import cssesc from 'cssesc';
-import { NoSuchElement } from '../Errors';
+import { NoSuchElement } from '../errors/NoSuchElement';
 import { fromWebDriverElement } from './Element';
 
 export function getElement(strategy: string, selector: string, context?: string): HTMLElement {

@@ -37,8 +37,7 @@ export function startBrowser(options?: LaunchOptions): { driver: Browser<'async'
       capabilities: <any>{
         platformName: 'html',
         'appium:automationName': 'html',
-        'appium:udid': UDID,
-        'appium:handle': 'main',
+        'appium:debuggingAddress': `odc://${UDID}/main`,
       },
     });
 
@@ -51,7 +50,7 @@ export function startBrowser(options?: LaunchOptions): { driver: Browser<'async'
   });
 
   afterEach(async () => {
-    await appium.deleteSession();
+    await appium?.deleteSession();
     await context.close();
   });
 
@@ -76,7 +75,7 @@ export async function inline(html: String): Promise<string[]> {
     `
     document.documentElement.innerHTML = arguments[0];
     return [...document.querySelectorAll('[data-return]')];
-  `,
+    `,
     [html]
   );
 

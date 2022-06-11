@@ -1,18 +1,17 @@
-import type { Driver } from '../Driver';
-import { ElementNotInteractable } from '../Errors';
+import { ElementNotInteractable } from '../errors/ElementNotInteractable';
 import { fromWebDriverElement } from '../helpers/Element';
 import { ATOMIC_TYPES, isEditableElement } from '../helpers/isEditableElement';
 
-export function setValue(this: Driver, text: string, elementId: string): void {
+export function setValue(text: string, elementId: string): void {
   const element = fromWebDriverElement(elementId);
-  const isFocused = this.context.document.activeElement === element;
+  const isFocused = window.document.activeElement === element;
 
   if (!isEditableElement(element)) {
     throw ElementNotInteractable('element is not editable');
   }
 
   if (element.isContentEditable) {
-    let selection = this.context.getSelection();
+    let selection = window.getSelection();
 
     if (!isFocused) {
       element.focus();
@@ -21,7 +20,7 @@ export function setValue(this: Driver, text: string, elementId: string): void {
     }
 
     if (selection?.rangeCount) {
-      const node = this.context.document.createTextNode(text);
+      const node = window.document.createTextNode(text);
       const range = selection.getRangeAt(0);
       range.deleteContents();
       range.insertNode(node);

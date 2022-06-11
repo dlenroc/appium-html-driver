@@ -1,7 +1,6 @@
-import type { Driver } from '../Driver';
 import { fromWebDriverElement } from '../helpers/Element';
 
-export function elementSelected(this: Driver, elementId: string): boolean {
+export function elementSelected(elementId: string): boolean {
   const element = fromWebDriverElement(elementId);
   const tagName = element.tagName;
 

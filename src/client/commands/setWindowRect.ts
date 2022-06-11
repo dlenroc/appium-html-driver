@@ -1,8 +1,8 @@
 import type { Rect } from '@appium/types';
-import type { Driver } from '../Driver';
-import { InvalidArgument } from '../Errors';
+import { InvalidArgument } from '../errors/InvalidArgument';
+import { getWindowRect } from './getWindowRect';
 
-export function setWindowRect(this: Driver, x?: number, y?: number, width?: number, height?: number): Rect {
+export function setWindowRect(x?: number, y?: number, width?: number, height?: number): Rect {
   const hasX = typeof x === 'number';
   const hasY = typeof y === 'number';
   const hasWidth = typeof width === 'number';
@@ -18,13 +18,13 @@ export function setWindowRect(this: Driver, x?: number, y?: number, width?: numb
 
   for (let i = 0; i < 3; i++) {
     if (hasX && hasY) {
-      this.topContext.moveTo(x, y);
+      window.moveTo(x, y);
     }
 
     if (hasWidth && hasHeight) {
-      this.topContext.resizeTo(width, height);
+      window.resizeTo(width, height);
     }
   }
 
-  return this.getWindowRect();
+  return getWindowRect();
 }

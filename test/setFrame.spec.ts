@@ -11,7 +11,7 @@ describe('setFrame', () => {
     await driver.switchToFrame(0);
 
     await driver.findElement('tag name', 'input')
-      .should.eventually.be.fulfilled;
+      .should.eventually.be.fulfilled.with.property(ELEMENT_ID);
   });
 
   it('should set frame by element', async () => {
@@ -22,7 +22,7 @@ describe('setFrame', () => {
     await driver.switchToFrame({ [ELEMENT_ID]: frame });
 
     await driver.findElement('tag name', 'input')
-      .should.eventually.be.fulfilled;
+      .should.eventually.be.fulfilled.with.property(ELEMENT_ID);
   });
 
   it('should set frame by null', async () => {
@@ -33,8 +33,8 @@ describe('setFrame', () => {
     await driver.switchToFrame(0);
     await driver.switchToFrame(null);
 
-    await driver.findElement('tag name', 'input')
-      .should.eventually.be.fulfilled;
+    await driver.findElement('tag name', 'iframe')
+      .should.eventually.be.fulfilled.with.property(ELEMENT_ID);
   });
 
   it('should throw NoSuchFrame', async () => {

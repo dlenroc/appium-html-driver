@@ -1,5 +1,3 @@
-import type { Driver } from '../Driver';
-
-export function getUrl(this: Driver): string {
-  return this.topContext.location.href;
+export function getUrl(): string {
+  return window.location.href;
 }
