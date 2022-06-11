@@ -1,5 +1,5 @@
 import { performance } from 'perf_hooks';
-import { setTimeout } from 'timers/promises';
+import { setTimeout } from 'timers';
 
 export async function retrying<Type>(options: { duration?: number; timeout: number; command: () => Promise<Type>; validate: (result?: Type, error?: any) => boolean }): Promise<Type> {
   const duration = options.duration || 500;
@@ -29,9 +29,9 @@ export async function retrying<Type>(options: { duration?: number; timeout: numb
     }
 
     if (elapsed > duration) {
-      await setTimeout(duration);
+      await new Promise(resolve => setTimeout(resolve, duration));
     } else {
-      await setTimeout(elapsed);
+      await new Promise(resolve => setTimeout(resolve, elapsed));
     }
   }
 }
