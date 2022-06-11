@@ -8,7 +8,7 @@ export async function setWindow(this: Driver, handle: string): Promise<void> {
     throw new errors.NoSuchWindowError(`window with handle '${handle}' does not exist`);
   }
 
-  this.handle = handle;
+  await this.remote.setSession(handle);
 
   await remote('setWindow').call(this, handle);
 }

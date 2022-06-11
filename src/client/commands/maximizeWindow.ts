@@ -1,15 +1,15 @@
 import type { Rect } from '@appium/types';
-import type { Driver } from '../Driver';
+import { setWindowRect } from './setWindowRect';
 
-export function maximizeWindow(this: Driver): Rect {
-  const width = this.topContext.screen.availWidth;
-  const height = this.topContext.screen.availHeight;
-
-  // @ts-ignore
-  const x = this.topContext.screen.availLeft || 0;
+export function maximizeWindow(): Rect {
+  const width = window.screen.availWidth;
+  const height = window.screen.availHeight;
 
   // @ts-ignore
-  const y = this.topContext.screen.availTop || 0;
+  const x = window.screen.availLeft || 0;
 
-  return this.setWindowRect(x, y, width, height);
+  // @ts-ignore
+  const y = window.screen.availTop || 0;
+
+  return setWindowRect(x, y, width, height);
 }

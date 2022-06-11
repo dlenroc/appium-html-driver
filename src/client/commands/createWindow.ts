@@ -2,17 +2,16 @@
 
 import type { WindowHandle } from '@appium/types';
 import { v4 as uuid } from 'uuid';
-import type { Driver } from '../Driver';
-import { InvalidArgument } from '../Errors';
+import { InvalidArgument } from '../errors/InvalidArgument';
 
-export function createWindow(this: Driver, type: string): WindowHandle {
+export function createWindow(this: { url?: string }, type: string): WindowHandle {
   const handle = uuid();
-  const url = `${this.host}/appium-html-driver/home/${this.udid}/${handle}`;
+  const url = this.url ? this.url + '/' + handle : 'about:blank#' + handle;
 
   if (type === 'tab') {
-    this.topContext.open(url, '', 'noopener');
+    window.open(url, '', 'noopener');
   } else if (type === 'window') {
-    this.topContext.open(url, '', 'resizable,noopener');
+    window.open(url, '', 'resizable,noopener');
   } else {
     throw InvalidArgument(`supported types are 'tab' and 'window', but got '${type}'`);
   }

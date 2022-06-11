@@ -1,11 +1,11 @@
 # Appium HTML Driver · [![NPM Version](https://img.shields.io/npm/v/@dlenroc/appium-html-driver?cacheSeconds=86400)](https://www.npmjs.com/package/@dlenroc/appium-html-driver) ![Node.js Version](https://img.shields.io/node/v/@dlenroc/appium-html-driver)
 
-An HTML driver that allows running commands in the context of instrumented pages regardless of the target platform
+An HTML driver that allows running WebDriver commands in the context of web applications running on any device with decent JS support.
 
 Note:
 
-- Interaction via `remote control` and `JS` is different, so I advise to use `remote control` where possible
-- Installation / Launch of the application is beyond the scope of the driver and must be performed separately
+- Interaction via `remote control` and `JS` is different, so I advise to use `remote control` where possible.
+- Installation / Launch of the application is beyond the scope of the driver and must be performed separately.
 
 ## Installation
 
@@ -13,28 +13,52 @@ Note:
 appium driver install --source npm @dlenroc/appium-html-driver
 ```
 
-## Instrumentation
+## Connection
 
-Inject the following code in every HTML file that belongs to your application
+If the device supports [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) then we can attach to page directly:
 
-```html
-<script src="{origin}/appium-html-driver/js/{udid}/{handle}"></script>
+```shell
+# an example of what the devtools debug address might look like
+ws://127.0.0.1:9222/devtools/page/ABFB063F574323D4B5AE9A40BAFD22D7
 ```
 
-Where:
+Otherwise, the setup gets a bit more complicated, because in addition to `debuggingAddress` we also need to instrument the application under test:
 
-- origin - address of the Appium server, for example: `http://192.168.0.2:4723`
-- udid - identifier that represent your device, for example: `{device-name}-{serial-number}`
-- handle _(optional)_ - identifier that will represent the window handle
+1. Inject the following code in every HTML file that belongs to your application.
+
+    ```html
+    <script src="{origin}/appium-html-driver/js/{udid}/{handle}"></script>
+    ```
+
+    Where:
+
+      - origin - address of the Appium server, for example: `http://192.168.0.2:4723`.
+      - udid - identifier that represent your device, for example: `{device-name}-{serial-number}`.
+      - handle _(optional)_ - identifier that will represent the window handle.
+
+2. Point to the previously instrumented application in `debuggingAddress`.
+
+    ```shell
+    odc://{udid}/{handle}
+    ```
+
+    > NOTE: Because of how the instrumentation process works, the test session should start first, and then the application.
+    >
+    > If this is a problem, you can initialize the driver yourself once and then not care about the mentioned limitation:
+    >
+    > ```shell
+    > curl 'http://localhost:4723/session' \
+    >   -H 'content-type: application/json;charset=utf-8' \
+    >   -d '{ "capabilities": { "alwaysMatch": { "platformName": "html", "appium:automationName": "html", "appium:debuggingAddress": "odc://init" } } }'
+    > ```
 
 ## Capabilities
 
-| Capability              | Required |  Type  | Description    |
-| ----------------------- | :------: | :----: | -------------- |
-| `platformName`          |    +     | string | Must be `html` |
-| `appium:automationName` |    +     | string | Must be `html` |
-| `appium:udid`           |    +     | string | Device ID      |
-| `appium:handle`         |    -     | string | Window handle  |
+| Capability                | Required |  Type  | Description              |
+| ------------------------- | :------: | :----: | ------------------------ |
+| `platformName`            |    +     | string | Must be `html`           |
+| `appium:automationName`   |    +     | string | Must be `html`           |
+| `appium:debuggingAddress` |    +     | string | Device debugging address |
 
 ## Commands
 

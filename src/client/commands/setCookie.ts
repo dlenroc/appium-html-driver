@@ -1,8 +1,7 @@
 import type { Cookie } from '@appium/types';
-import type { Driver } from '../Driver';
-import { InvalidArgument } from '../Errors';
+import { InvalidArgument } from '../errors/InvalidArgument';
 
-export function setCookie(this: Driver, cookie: Cookie): void {
+export function setCookie(cookie: Cookie): void {
   if (!cookie.name) {
     throw InvalidArgument('cookie name is required');
   }
@@ -33,5 +32,5 @@ export function setCookie(this: Driver, cookie: Cookie): void {
     newCookie += '; SameSite=' + cookie.sameSite;
   }
 
-  this.context.document.cookie = newCookie;
+  window.document.cookie = newCookie;
 }

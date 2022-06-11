@@ -1,9 +1,8 @@
-import type { Driver } from '../Driver';
-import { InvalidElementState } from '../Errors';
+import { InvalidElementState } from '../errors/InvalidElementState';
 import { fromWebDriverElement } from '../helpers/Element';
 import { isEditableElement } from '../helpers/isEditableElement';
 
-export function clear(this: Driver, elementId: string): void {
+export function clear(elementId: string): void {
   const element = fromWebDriverElement(elementId);
 
   if (!isEditableElement(element)) {

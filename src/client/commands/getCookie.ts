@@ -1,9 +1,9 @@
 import type { Cookie } from '@appium/types';
-import type { Driver } from '../Driver';
-import { NoSuchCookie } from '../Errors';
+import { NoSuchCookie } from '../errors/NoSuchCookie';
+import { getCookies } from './getCookies';
 
-export function getCookie(this: Driver, name: string): Cookie {
-  const cookies = this.getCookies();
+export function getCookie(name: string): Cookie {
+  const cookies = getCookies();
   const cookie = cookies.find((cookie) => cookie.name === name);
 
   if (!cookie) {
