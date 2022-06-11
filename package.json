@@ -24,7 +24,7 @@
     "test": "mocha -r ts-node/register -b -p -j 3 -t 10000 --retries 1 test/**/*.ts"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14"
   },
   "appium": {
     "driverName": "html",
