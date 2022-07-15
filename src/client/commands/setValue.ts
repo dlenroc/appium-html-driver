@@ -2,7 +2,9 @@ import { ElementNotInteractable } from '../errors/ElementNotInteractable';
 import { fromWebDriverElement } from '../helpers/Element';
 import { ATOMIC_TYPES, isEditableElement } from '../helpers/isEditableElement';
 
-export function setValue(text: string, elementId: string): void {
+export function setValue(text: string | string[], elementId: string): void {
+  text = Array.isArray(text) ? text.join('') : text;
+
   const element = fromWebDriverElement(elementId);
   const isFocused = window.document.activeElement === element;
 
