@@ -1,3 +1,4 @@
+import { randomUUID } from 'crypto';
 import express from 'express';
 import fs from 'fs';
 import type { RequestListener, Server as HttpServer } from 'http';
@@ -104,11 +105,11 @@ function injectServer(server: HttpServer): Server {
       .get('/js/:udid?/:handle?', (req, res) => {
         const address = server.address() as AddressInfo;
         const udid = req.params.udid || 'main';
-        const handle = req.params.handle || '';
+        const handle = req.params.handle || randomUUID();
         const url = `${req.protocol}://${req.hostname}:${address.port}`;
 
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('Content-Type', 'application/javascript');
 
         let body = client;
         body = body.replace('<appium-html-driver-url>', url);

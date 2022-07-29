@@ -12,6 +12,7 @@ export async function createWindow(this: Driver, type: string): Promise<WindowHa
   const context: Record<string, any> = {};
 
   if (this.remote instanceof InstrumentedDevice) {
+    // @ts-ignore `server` is a hidden property
     const port = this.server.address().port;
     const ip = Object.values(networkInterfaces())
       .flat()
