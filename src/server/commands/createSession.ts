@@ -1,11 +1,11 @@
-import type { BaseDriver } from '@appium/base-driver';
+import type { ExternalDriver } from '@appium/types';
 import { URL } from 'url';
 import { DevToolsDevice } from '../adapters/DevToolsDevice';
 import { InstrumentedDevice } from '../adapters/InstrumentedDevice';
 import type { Driver } from '../Driver';
 import { getNamespace } from '../helpers/server';
 
-export async function createSession(this: Driver, createSession: typeof BaseDriver['createSession'], jwpCaps: any, jwpReqCaps: any, w3cCaps: any): Promise<[string, {}]> {
+export async function createSession(this: Driver, createSession: ExternalDriver['createSession'], jwpCaps: any, jwpReqCaps: any, w3cCaps: any): Promise<[string, {}]> {
   const session = await createSession(jwpCaps, jwpReqCaps, w3cCaps);
   const url = new URL(this.opts.debuggingAddress);
 
@@ -21,6 +21,7 @@ export async function createSession(this: Driver, createSession: typeof BaseDriv
     this.opts.udid = matches[1];
     this.opts.handle = matches[2];
 
+    // @ts-ignore `server` is a hidden property
     const namespace = getNamespace(this.server, this.opts.udid);
 
     this.remote = new InstrumentedDevice();

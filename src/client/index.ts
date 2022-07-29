@@ -1,8 +1,7 @@
 import { io } from 'socket.io-client';
-import { v4 as uuid } from 'uuid';
 import { command } from './commands/command';
 
-const id = '<appium-html-driver-handle>' || uuid();
+const id = '<appium-html-driver-handle>';
 const udid = '<appium-html-driver-udid>';
 const host = '<appium-html-driver-url>';
 const type = window.top === window ? 'window' : 'frame';
