@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.0.2](https://github.com/dlenroc/appium-html-driver/compare/v0.0.1...v0.0.2) (2022-07-29)
+
+
+### Bug Fixes
+
+* `getElementRect` type ([d548fb0](https://github.com/dlenroc/appium-html-driver/commit/d548fb0bc66021ff79cc8ad3e138f3eff5a1e7c2))
+* odc content-type ([34a9edb](https://github.com/dlenroc/appium-html-driver/commit/34a9edbce114fa85c21459e31b162ce870824293))
+
 ## [0.0.1](https://github.com/dlenroc/appium-html-driver/compare/v0.0.0...v0.0.1) (2022-06-11)
 
 
