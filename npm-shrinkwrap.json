@@ -1,12 +1,12 @@
 {
   "name": "@dlenroc/appium-html-driver",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
       "name": "@dlenroc/appium-html-driver",
-      "version": "0.0.1",
+      "version": "0.0.2",
       "license": "MIT",
       "dependencies": {
         "@appium/base-driver": "^8.6.0",

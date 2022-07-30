@@ -101,7 +101,7 @@ Otherwise, the setup gets a bit more complicated, because in addition to `debugg
 | [refresh](src/client/commands/refresh.ts)                     | Refresh                    |
 | [setCookie](src/client/commands/setCookie.ts)                 | Add cookie                 |
 | [setFrame](src/client/commands/setFrame.ts)                   | Switch to frame            |
-| [setParentFrame](src/client/commands/setParentFrame.ts)       | Switch to parent frame     |
+| [setParentFrame](src/server/commands/setParentFrame.ts)       | Switch to parent frame     |
 | [setUrl](src/client/commands/setUrl.ts)                       | Navigate to URL            |
 | [setValue](src/client/commands/setValue.ts)                   | Element send keys          |
 | [setWindow](src/server/commands/setWindow.ts)                 | Switch to window           |
