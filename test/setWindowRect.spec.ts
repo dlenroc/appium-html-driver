@@ -1,4 +1,4 @@
-import { HOME_PAGE, inline, startBrowser } from './_base';
+import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base';
 
 describe('setWindowRect', () => {
   const { driver } = startBrowser({ headless: false });
@@ -29,14 +29,16 @@ describe('setWindowRect', () => {
       .should.eventually.be.rejected.with.property('name', 'invalid argument');
   });
 
-  it('should throw UnsupportedOperation for instrumented frame', async () => {
-    await inline(`
+  if (MODE == Mode.ODC) {
+    it('should throw UnsupportedOperation for instrumented frame', async () => {
+      await inline(`
       <iframe src="${HOME_PAGE}/frame"/>
     `);
 
-    await driver.switchToWindow('frame');
+      await driver.switchToWindow('frame');
 
-    await driver.setWindowRect(rect.x, rect.y, rect.width, rect.height)
-      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
-  });
+      await driver.setWindowRect(rect.x, rect.y, rect.width, rect.height)
+        .should.eventually.be.rejected.with.property('name', 'unsupported operation');
+    });
+  }
 });
