@@ -1,4 +1,4 @@
-import { HOME_PAGE, inline, startBrowser } from './_base';
+import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base';
 
 describe('getWindowRect', () => {
   const { driver } = startBrowser();
@@ -17,14 +17,16 @@ describe('getWindowRect', () => {
       .should.eventually.be.eql(rect);
   });
 
-  it('should throw UnsupportedOperation for instrumented frame', async () => {
-    await inline(`
+  if (MODE == Mode.ODC) {
+    it('should throw UnsupportedOperation for instrumented frame', async () => {
+      await inline(`
       <iframe src="${HOME_PAGE}/frame"/>
     `);
 
-    await driver.switchToWindow('frame');
+      await driver.switchToWindow('frame');
 
-    await driver.getWindowRect()
-      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
-  });
+      await driver.getWindowRect()
+        .should.eventually.be.rejected.with.property('name', 'unsupported operation');
+    });
+  }
 });

@@ -21,7 +21,9 @@
     "build": "NODE_OPTIONS=--max_old_space_size=6144 rollup -c",
     "watch": "rollup -c -w",
     "prepare": "npm run build",
-    "test": "mocha -r ts-node/register -b -p -j 3 -t 10000 --retries 1 test/**/*.ts"
+    "test": "npm run test:odc && npm run test:cdp",
+    "test:odc": "MODE=ODC mocha -r ts-node/register -b -t 5000 test/**/*.ts",
+    "test:cdp": "MODE=CDP mocha -r ts-node/register -b -t 5000 test/**/*.ts"
   },
   "engines": {
     "node": ">=14"
@@ -35,16 +37,16 @@
     "mainClass": "Driver"
   },
   "dependencies": {
-    "@appium/base-driver": "^8.6.0",
+    "@appium/base-driver": "^8.7.0",
     "chrome-remote-interface": "^0.31.3",
     "express": "^4.18.1",
     "socket.io": "^4.5.1"
   },
   "devDependencies": {
-    "@appium/types": "^0.3.0",
-    "@rollup/plugin-commonjs": "^22.0.1",
+    "@appium/types": "^0.4.0",
+    "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^13.3.0",
-    "@types/chai": "^4.3.1",
+    "@types/chai": "^4.3.3",
     "@types/chai-as-promised": "^7.1.5",
     "@types/chai-like": "^1.1.1",
     "@types/chai-things": "^0.0.35",
@@ -60,8 +62,8 @@
     "cssesc": "^3.0.0",
     "lodash-es": "^4.17.21",
     "mocha": "^10.0.0",
-    "playwright-chromium": "^1.24.2",
-    "rollup": "^2.77.2",
+    "playwright-chromium": "^1.25.0",
+    "rollup": "^2.77.3",
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-typescript2": "^0.32.1",
     "scroll-into-view-if-needed": "^2.2.29",
@@ -69,6 +71,7 @@
     "ts-node": "^10.9.1",
     "tslib": "^2.4.0",
     "typescript": "^4.7.4",
+    "uuid": "^8.3.2",
     "webdriverio": "^7.20.9"
   }
 }

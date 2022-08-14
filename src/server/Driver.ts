@@ -3,7 +3,7 @@ import type { Element, ExternalDriver } from '@appium/types';
 import { RemoteDevice } from './adapters/RemoteDevice';
 import { closeWindow } from './commands/closeWindow';
 import { createSession } from './commands/createSession';
-import { createWindow } from './commands/createWindow';
+import { createNewWindow } from './commands/createNewWindow';
 import { getTimeouts } from './commands/getTimeouts';
 import { getWindowHandle } from './commands/getWindowHandle';
 import { getWindowHandles } from './commands/getWindowHandles';
@@ -17,10 +17,7 @@ export class Driver extends BaseDriver implements ExternalDriver {
   static newMethodMap = {
     '/session/:sessionId/frame/parent': {
       POST: { command: 'setParentFrame' },
-    },
-    '/session/:sessionId/window/new': {
-      POST: { command: 'createWindow', payloadParams: { required: ['type'] } },
-    },
+    }
   };
 
   // Connections
@@ -48,7 +45,7 @@ export class Driver extends BaseDriver implements ExternalDriver {
   public title = remote('title', { requireWindow: true });
   public getWindowHandle = getWindowHandle;
   public closeWindow = closeWindow;
-  public createWindow = createWindow;
+  public createNewWindow = createNewWindow;
   public setWindow = setWindow;
   public getWindowHandles = getWindowHandles;
   public setFrame = setFrame;

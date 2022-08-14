@@ -8,9 +8,9 @@ export async function closeWindow(this: Driver): Promise<string[]> {
 
   await remote('closeWindow', { requireWindow: true, noWait: true }).call(this);
 
-  await retrying({
+  return retrying({
     timeout: this.socketTimeoutMs,
-    validate: (result?: boolean) => !!result === true,
+    validate: (result?: string[]) => !!result,
     command: async () => {
       const handles = await this.getWindowHandles();
 
@@ -18,9 +18,7 @@ export async function closeWindow(this: Driver): Promise<string[]> {
         throw new errors.UnsupportedOperationError('window close confirmation not received');
       }
 
-      return true;
+      return handles;
     },
   });
-
-  return this.getWindowHandles();
 }

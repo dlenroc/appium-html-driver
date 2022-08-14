@@ -1,10 +1,8 @@
-/// <reference path='../../../types/appium-types.d.ts'/>
-
-import type { WindowHandle } from '@appium/types';
+import type { NewWindow } from '@appium/types';
 import { v4 as uuid } from 'uuid';
 import { InvalidArgument } from '../errors/InvalidArgument';
 
-export function createWindow(this: { url?: string }, type: string): WindowHandle {
+export function createNewWindow(this: { url?: string }, type: string): NewWindow {
   const handle = uuid();
   const url = this.url ? this.url + '/' + handle : 'about:blank#' + handle;
 

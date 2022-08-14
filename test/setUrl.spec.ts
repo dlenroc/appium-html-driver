@@ -1,4 +1,4 @@
-import { HOME_PAGE, inline, startBrowser } from './_base';
+import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base';
 
 describe('setUrl', () => {
   const { driver } = startBrowser();
@@ -10,14 +10,16 @@ describe('setUrl', () => {
       .should.eventually.be.equal(`${HOME_PAGE}/main#other_page`);
   });
 
-  it('should throw UnsupportedOperation for instrumented frame', async () => {
-    await inline(`
+  if (MODE == Mode.ODC) {
+    it('should throw UnsupportedOperation for instrumented frame', async () => {
+      await inline(`
       <iframe src="${HOME_PAGE}/frame"/>
     `);
 
-    await driver.switchToWindow('frame');
+      await driver.switchToWindow('frame');
 
-    await driver.navigateTo(HOME_PAGE)
-      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
-  });
+      await driver.navigateTo(HOME_PAGE)
+        .should.eventually.be.rejected.with.property('name', 'unsupported operation');
+    });
+  }
 });

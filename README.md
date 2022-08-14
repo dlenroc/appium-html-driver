@@ -1,11 +1,6 @@
 # Appium HTML Driver · [![NPM Version](https://img.shields.io/npm/v/@dlenroc/appium-html-driver?cacheSeconds=86400)](https://www.npmjs.com/package/@dlenroc/appium-html-driver) ![Node.js Version](https://img.shields.io/node/v/@dlenroc/appium-html-driver)
 
-An HTML driver that allows running WebDriver commands in the context of web applications running on any device with decent JS support.
-
-Note:
-
-- Interaction via `remote control` and `JS` is different, so I advise to use `remote control` where possible.
-- Installation / Launch of the application is beyond the scope of the driver and must be performed separately.
+Appium HTML Driver is a WebDriver that allows controlling applications written using web technologies, regardless of the device they are running on.
 
 ## Installation
 
@@ -15,50 +10,99 @@ appium driver install --source npm @dlenroc/appium-html-driver
 
 ## Connection
 
-If the device supports [DevTools Protocol](https://chromedevtools.github.io/devtools-protocol/) then we can attach to page directly:
+### DevTools Protocol
+
+If target supports the devtools protocol, then we can connect to it via [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface).
+
+1. Get the DevTools target address (sample with `Google Chrome`)
+
+   ```shell
+   $ "<browser.path>" --user-data-dir="$(mktemp -d)" --remote-debugging-port="9222"
+
+   DevTools listening on ws://127.0.0.1:9222/devtools/browser/c8f3b64d-aa40-4c56-b1d4-b4796fb24eae
+   ```
+
+2. Attach and run test
+
+   ```typescript
+   await driver = await remote({
+     'capabilities': {
+       'platformName': 'html',
+       'appium:automationName': 'html',
+       'appium:debuggingAddress': 'ws://127.0.0.1:9222/devtools/browser/c8f3b64d-aa40-4c56-b1d4-b4796fb24eae'
+     },
+   });
+
+   // Attach to target
+   const handles = await driver.getWindowHandles();
+   await driver.switchToWindow(handles[0]);
+
+   // Conduct testing
+   await driver.getUrl()
+     .should.eventually.be.fulfilled;
+   ```
+
+### On-Device Component
+
+If target doesn't support [DevTools Protocol](#devtools-protocol) or you need access to pages it can't access, then `ODC` may be what you need.
+
+1. Instrumentation
+
+   Inject the following code in every HTML file that belongs to your application.
+
+   ```html
+   <script src="{origin}/appium-html-driver/js/{udid}/{handle}"></script>
+   ```
+
+   Where:
+
+   - origin - address of the Appium server, for example: `http://192.168.0.2:4723`.
+   - udid - identifier that represent your device, for > example: `{device-name}-{serial-number}`.
+   - handle _(optional)_ - identifier that will represent the window handle.
+
+2. Attach and run test
+
+   ```typescript
+   await driver = await remote({
+     'capabilities': {
+       'platformName': 'html',
+       'appium:automationName': 'html',
+       'appium:debuggingAddress': `odc://${udid}/${handle}`
+     },
+   });
+
+   /**
+    * Load instrumented page manually, via cli or in any other way
+    *
+    * NOTE: that is not driver's responsibility
+    */
+
+   // Attach to target
+   const handles = await driver.getWindowHandles();
+   await driver.switchToWindow(handles[0]);
+
+   // Conduct testing
+   await driver.getUrl()
+     .should.eventually.be.fulfilled;
+   ```
+
+NOTE: Because of how the instrumentation process works, the test session should start first, and then the application.
+
+If this is a problem, you can initialize the driver yourself once and then not care about the mentioned limitation:
 
 ```shell
-# an example of what the devtools debug address might look like
-ws://127.0.0.1:9222/devtools/page/ABFB063F574323D4B5AE9A40BAFD22D7
+curl 'http://localhost:4723/session' \
+  -H 'content-type: application/json;charset=utf-8' \
+  -d '{ "capabilities": { "alwaysMatch": { "platformName": "html", "appium:automationName": "html", "appium:debuggingAddress": "odc://init" } } }'
 ```
-
-Otherwise, the setup gets a bit more complicated, because in addition to `debuggingAddress` we also need to instrument the application under test:
-
-1. Inject the following code in every HTML file that belongs to your application.
-
-    ```html
-    <script src="{origin}/appium-html-driver/js/{udid}/{handle}"></script>
-    ```
-
-    Where:
-
-      - origin - address of the Appium server, for example: `http://192.168.0.2:4723`.
-      - udid - identifier that represent your device, for example: `{device-name}-{serial-number}`.
-      - handle _(optional)_ - identifier that will represent the window handle.
-
-2. Point to the previously instrumented application in `debuggingAddress`.
-
-    ```shell
-    odc://{udid}/{handle}
-    ```
-
-    > NOTE: Because of how the instrumentation process works, the test session should start first, and then the application.
-    >
-    > If this is a problem, you can initialize the driver yourself once and then not care about the mentioned limitation:
-    >
-    > ```shell
-    > curl 'http://localhost:4723/session' \
-    >   -H 'content-type: application/json;charset=utf-8' \
-    >   -d '{ "capabilities": { "alwaysMatch": { "platformName": "html", "appium:automationName": "html", "appium:debuggingAddress": "odc://init" } } }'
-    > ```
 
 ## Capabilities
 
-| Capability                | Required |  Type  | Description              |
-| ------------------------- | :------: | :----: | ------------------------ |
-| `platformName`            |    +     | string | Must be `html`           |
-| `appium:automationName`   |    +     | string | Must be `html`           |
-| `appium:debuggingAddress` |    +     | string | Device debugging address |
+| Capability                | Required |  Type  | Description                   |
+| ------------------------- | :------: | :----: | ----------------------------- |
+| `platformName`            |    +     | string | Must be `html`                |
+| `appium:automationName`   |    +     | string | Must be `html`                |
+| `appium:debuggingAddress` |    +     | string | See [Connection](#connection) |
 
 ## Commands
 
@@ -70,7 +114,7 @@ Otherwise, the setup gets a bit more complicated, because in addition to `debugg
 | [click](src/client/commands/click.ts)                         | Element click              |
 | [closeWindow](src/server/commands/closeWindow.ts)             | Close window               |
 | [createSession](src/server/commands/createSession.ts)         | New session                |
-| [createWindow](src/server/commands/createWindow.ts)           | New window                 |
+| [createNewWindow](src/server/commands/createNewWindow.ts)     | New window                 |
 | [deleteCookie](src/client/commands/deleteCookie.ts)           | Delete cookie              |
 | [deleteCookies](src/client/commands/deleteCookies.ts)         | Delete all cookies         |
 | [elementDisplayed](src/client/commands/elementDisplayed.ts)   | Is element displayed       |

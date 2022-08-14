@@ -9,6 +9,7 @@ import { RemoteDevice } from './RemoteDevice';
 export class DevToolsDevice implements RemoteDevice {
   private cdp!: CDP.Client;
   private options!: CDP.Options;
+  private targetId!: string;
   private sessionId!: string;
   private commandScript = fs.readFileSync(path.resolve(__dirname, 'commands', 'command.js'));
 
@@ -26,13 +27,12 @@ export class DevToolsDevice implements RemoteDevice {
   }
 
   async getSession(): Promise<string> {
-    const targets = await this.cdp.Target.getTargets();
-    return targets.targetInfos.find((target) => target.type === 'page' && target.attached)?.targetId!;
+    return this.targetId;
   }
 
   async getSessions(): Promise<string[]> {
     const targets = await this.cdp.Target.getTargets();
-    return targets.targetInfos.filter((target) => target.type === 'page').map((target) => target.targetId);
+    return targets.targetInfos.filter((target) => target.type === 'page').map((target) => target.targetId).reverse();
   }
 
   async setSession(sessionId: string): Promise<void> {
@@ -44,6 +44,7 @@ export class DevToolsDevice implements RemoteDevice {
     }
 
     const response = await this.cdp.Target.attachToTarget({ targetId: sessionId, flatten: true });
+    this.targetId = sessionId;
     this.sessionId = response.sessionId;
   }
 
