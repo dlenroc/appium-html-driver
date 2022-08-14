@@ -6,7 +6,7 @@ import chaiAsPromised from 'chai-as-promised';
 import chaiLike from 'chai-like';
 import chaiThings from 'chai-things';
 import { randomUUID } from 'crypto';
-import fetch from 'node-fetch';
+import http from 'http';
 import { Browser as PlaywrightBrowser, BrowserContext, chromium, LaunchOptions } from 'playwright-chromium';
 import { env } from 'process';
 import { Browser, remote } from 'webdriverio';
@@ -34,7 +34,7 @@ export function startBrowser(options?: LaunchOptions): { driver: Browser<'async'
     options = options || {};
     if (MODE === Mode.CDP) {
       options.args = options.args || [];
-      options.args.push('--remote-debugging-port=9999');
+      options.args.push('--remote-debugging-port=9222');
     }
 
     playwright = await chromium.launch(options);
@@ -48,7 +48,7 @@ export function startBrowser(options?: LaunchOptions): { driver: Browser<'async'
       capabilities: <any>{
         platformName: 'html',
         'appium:automationName': 'html',
-        'appium:debuggingAddress': MODE === Mode.CDP ? await getWebSocketDebuggerUrl(9999) : `odc://${UDID}/main`,
+        'appium:debuggingAddress': MODE === Mode.CDP ? await getWebSocketDebuggerUrl(9222) : `odc://${UDID}/main`,
       },
     });
 
@@ -120,8 +120,12 @@ async function waitWindow(handle: string, allowExtraHandles: boolean = true, tim
   });
 }
 
-async function getWebSocketDebuggerUrl(port: number): Promise<string> {
-  const response = await fetch(`http://localhost:${port}/json/version`);
-  const body = await response.json();
-  return body.webSocketDebuggerUrl;
+function getWebSocketDebuggerUrl(port: number): Promise<string> {
+  return new Promise((resolve, reject) => {
+    http.get(`http://localhost:${port}/json/version`, (resp) => {
+      let data = '';
+      resp.on('data', (chunk) => data += chunk);
+      resp.on('end', () => resolve(JSON.parse(data).webSocketDebuggerUrl));
+    }).on("error", (err) => reject(err));
+  });
 }
