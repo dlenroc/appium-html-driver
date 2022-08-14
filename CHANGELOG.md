@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/dlenroc/appium-html-driver/compare/v0.0.2...v0.0.3) (2022-08-14)
+
+
+### Bug Fixes
+
+* **cdp:** window handle ([7ef90ac](https://github.com/dlenroc/appium-html-driver/commit/7ef90aca7007398edbf002fadb37e93aeb67485b))
+
 ## [0.0.2](https://github.com/dlenroc/appium-html-driver/compare/v0.0.1...v0.0.2) (2022-07-29)
 
 
