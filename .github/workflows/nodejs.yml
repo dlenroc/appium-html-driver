@@ -8,8 +8,7 @@ jobs:
     strategy:
       matrix:
         node-version:
-          - 14.x
-          - 16.x
+          - 20.x
     steps:
       - name: Install Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
@@ -17,17 +16,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Update NPM
-        run: npm install -g npm@8
-      - name: Build
+      - name: Install dependencies
         run: npm ci
-      - name: Install Appium
-        run: npm install -g appium@next
+      - name: Build
+        run: npm run build
       - name: Install HTML driver
-        run: appium driver install --source local "$(pwd)"
+        run: npx appium driver install --source local "$(pwd)"
       - name: Run Appium server
         run: |
-          appium server &
+          npx appium server &
           while ! nc -z localhost 4723; do
             sleep 1
           done

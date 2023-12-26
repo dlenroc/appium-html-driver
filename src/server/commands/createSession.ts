@@ -1,37 +1,64 @@
-import type { ExternalDriver } from '@appium/types';
+import { BaseDriver } from '@appium/base-driver';
+import type {
+  DefaultCreateSessionResult,
+  DriverData,
+  W3CDriverCaps,
+} from '@appium/types';
 import { URL } from 'url';
+import { HtmlDriver } from '../Driver';
 import { DevToolsDevice } from '../adapters/DevToolsDevice';
 import { InstrumentedDevice } from '../adapters/InstrumentedDevice';
-import type { Driver } from '../Driver';
+import { capabilitiesConstraints } from '../capabilitiesConstraints';
 import { getNamespace } from '../helpers/server';
 
-export async function createSession(this: Driver, createSession: ExternalDriver['createSession'], jwpCaps: any, jwpReqCaps: any, w3cCaps: any): Promise<[string, {}]> {
-  const session = await createSession(jwpCaps, jwpReqCaps, w3cCaps);
+export async function createSession(
+  this: HtmlDriver,
+  w3cCaps1: W3CDriverCaps<typeof capabilitiesConstraints>,
+  w3cCaps2?: W3CDriverCaps<typeof capabilitiesConstraints>,
+  w3cCaps3?: W3CDriverCaps<typeof capabilitiesConstraints>,
+  driverData?: DriverData[]
+): Promise<DefaultCreateSessionResult<typeof capabilitiesConstraints>> {
+  const session = await BaseDriver.prototype.createSession.call(
+    this,
+    w3cCaps1,
+    w3cCaps2,
+    w3cCaps3,
+    driverData
+  );
+
   const url = new URL(this.opts.debuggingAddress);
 
   if (url.protocol === 'ws:') {
     this.remote = new DevToolsDevice();
     await this.remote.open({ target: this.opts.debuggingAddress });
   } else if (url.protocol === 'odc:') {
-    const matches = this.opts.debuggingAddress.match(/^odc:\/\/([^\/]+)\/?([^\/#?]+)/);
+    const matches = this.opts.debuggingAddress.match(
+      /^odc:\/\/([^\/]+)\/?([^\/#?]+)/
+    );
     if (!matches) {
-      throw new Error(`Invalid odc debugging address: ${this.opts.debuggingAddress}`);
+      throw new Error(
+        `Invalid odc debugging address: ${this.opts.debuggingAddress}`
+      );
     }
 
-    this.opts.udid = matches[1];
-    this.opts.handle = matches[2];
+    const udid = matches[1];
+    const handle = matches[2];
+
+    this.opts.udid = udid;
 
     // @ts-ignore `server` is a hidden property
-    const namespace = getNamespace(this.server, this.opts.udid);
+    const namespace = getNamespace(this.server, udid);
 
     this.remote = new InstrumentedDevice();
-    await this.remote.open({ socket: namespace.server, udid: this.opts.udid });
+    await this.remote.open({ socket: namespace.server, udid });
 
-    if (this.opts.handle) {
-      await this.remote.setSession(this.opts.handle);
+    if (handle) {
+      await this.remote.setSession(handle);
     }
   } else {
-    throw new Error(`Unsupported debugging protocol: ${url.protocol.slice(0, -1)}`);
+    throw new Error(
+      `Unsupported debugging protocol: ${url.protocol.slice(0, -1)}`
+    );
   }
 
   return session;

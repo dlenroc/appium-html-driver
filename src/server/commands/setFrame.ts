@@ -1,8 +1,8 @@
 import type { Element } from '@appium/types';
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 import { remote } from '../helpers/remote';
 
-export async function setFrame(this: Driver, id: null | number | string | Element): Promise<void> {
+export async function setFrame(this: HtmlDriver, id: null | number | string | Element): Promise<void> {
   const frame = (await remote('setFrame').call(this, id as any)) as any;
 
   if (frame) {

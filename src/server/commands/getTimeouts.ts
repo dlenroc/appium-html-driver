@@ -1,6 +1,6 @@
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 
-export async function getTimeouts(this: Driver): Promise<Record<string, number>> {
+export async function getTimeouts(this: HtmlDriver): Promise<Record<string, number>> {
   return {
     script: this.scriptTimeoutMs,
     implicit: this.implicitWaitMs,

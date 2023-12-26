@@ -1,5 +1,5 @@
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 
-export async function setParentFrame(this: Driver): Promise<void> {
+export async function setParentFrame(this: HtmlDriver): Promise<void> {
   this.frames.splice(-1);
 }

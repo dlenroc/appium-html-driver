@@ -1,3 +1,5 @@
+/// <reference lib="dom" />
+
 import { io } from 'socket.io-client';
 import { command } from './commands/command';
 

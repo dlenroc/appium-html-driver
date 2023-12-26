@@ -1,7 +1,7 @@
 import { errors } from '@appium/base-driver';
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 
-export async function timeouts(this: Driver, type?: string, ms?: number, script?: number, pageLoad?: number, implicit?: number): Promise<void> {
+export async function timeouts(this: HtmlDriver, type?: string, ms?: number, script?: number, pageLoad?: number, implicit?: number): Promise<void> {
   if (script != null && script < 0) {
     throw new errors.InvalidArgumentError('timeouts.script: expected positive number, got ' + script);
   }

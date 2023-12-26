@@ -1,1 +1,1 @@
-export { Driver as default, Driver } from './Driver';
+export { HtmlDriver as Driver, HtmlDriver as default } from './Driver';

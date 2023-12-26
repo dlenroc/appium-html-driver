@@ -1,12 +1,12 @@
 import { errors } from '@appium/base-driver';
 import type { NewWindow, NewWindowType } from '@appium/types';
 import { networkInterfaces } from 'os';
+import type { HtmlDriver } from '../Driver';
 import { InstrumentedDevice } from '../adapters/InstrumentedDevice';
-import type { Driver } from '../Driver';
 import { remote } from '../helpers/remote';
 import { retrying } from '../helpers/retrying';
 
-export async function createNewWindow(this: Driver, type: NewWindowType): Promise<NewWindow> {
+export async function createNewWindow(this: HtmlDriver, type: NewWindowType): Promise<NewWindow> {
   const isInstrumentedDevice = this.remote instanceof InstrumentedDevice;
   const context: Record<string, any> = {};
 
