@@ -3,6 +3,6 @@
   "compilerOptions": {
     "lib": ["DOM"],
     "module": "ES2015",
-    "target": "ES3"
+    "target": "ES5"
   }
 }

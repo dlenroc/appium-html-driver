@@ -1,9 +1,9 @@
 import { errors } from '@appium/base-driver';
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 import { remote } from '../helpers/remote';
 import { retrying } from '../helpers/retrying';
 
-export async function closeWindow(this: Driver): Promise<string[]> {
+export async function closeWindow(this: HtmlDriver): Promise<string[]> {
   const handle = await this.getWindowHandle();
 
   await remote('closeWindow', { requireWindow: true, noWait: true }).call(this);
@@ -15,7 +15,9 @@ export async function closeWindow(this: Driver): Promise<string[]> {
       const handles = await this.getWindowHandles();
 
       if (handles.includes(handle)) {
-        throw new errors.UnsupportedOperationError('window close confirmation not received');
+        throw new errors.UnsupportedOperationError(
+          'window close confirmation not received'
+        );
       }
 
       return handles;

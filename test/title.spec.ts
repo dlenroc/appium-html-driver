@@ -15,8 +15,8 @@ describe('title', () => {
   if (MODE == Mode.ODC) {
     it('should throw UnsupportedOperation for instrumented frame', async () => {
       await inline(`
-      <iframe src="${HOME_PAGE}/frame"/>
-    `);
+        <iframe src="${HOME_PAGE}/frame"/>
+      `);
 
       await driver.switchToWindow('frame');
 

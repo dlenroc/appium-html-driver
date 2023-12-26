@@ -9,9 +9,9 @@ import { randomUUID } from 'crypto';
 import http from 'http';
 import { Browser as PlaywrightBrowser, BrowserContext, chromium, LaunchOptions } from 'playwright-chromium';
 import { env } from 'process';
-import { Browser, remote } from 'webdriverio';
+import { remote } from 'webdriverio';
 
-let appium: Browser<'async'>;
+let appium: WebdriverIO.Browser;
 let context: BrowserContext;
 let playwright: PlaywrightBrowser;
 
@@ -29,7 +29,7 @@ if (MODE === undefined) {
   throw new Error(`MODE environment should be 'CDP' or 'ODC'`);
 }
 
-export function startBrowser(options?: LaunchOptions): { driver: Browser<'async'> } {
+export function startBrowser(options?: LaunchOptions): { driver: WebdriverIO.Browser } {
   before(async () => {
     options = options || {};
     if (MODE === Mode.CDP) {
@@ -85,7 +85,7 @@ export function startBrowser(options?: LaunchOptions): { driver: Browser<'async'
           return Reflect.get(appium, property, receiver);
         },
       }
-    ) as Browser<'async'>,
+    ) as WebdriverIO.Browser,
   };
 }
 

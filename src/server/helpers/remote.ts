@@ -2,12 +2,12 @@ import { errors } from '@appium/base-driver';
 import type { Element, ExternalDriver } from '@appium/types';
 import fs from 'fs/promises';
 import path from 'path';
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 
 const scripts: Record<string, string> = {};
 
 export function remote<Command extends keyof ExternalDriver | string>(command: Command, options: { requireWindow?: boolean; noWait?: boolean; context?: Record<string, any>; frame?: Element } = {}): NonNullable<Command extends keyof ExternalDriver ? ExternalDriver[Command] : any> {
-  return async function (this: Driver, ...args: any[]) {
+  return async function (this: HtmlDriver, ...args: any[]) {
     if (options.requireWindow && (await this.remote.getType()) !== 'window') {
       throw new errors.UnsupportedOperationError(`'${command}' is not supported in frame`);
     }

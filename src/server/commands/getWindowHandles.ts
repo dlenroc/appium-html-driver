@@ -1,5 +1,5 @@
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 
-export async function getWindowHandles(this: Driver): Promise<string[]> {
+export async function getWindowHandles(this: HtmlDriver): Promise<string[]> {
   return this.remote.getSessions();
 }

@@ -6,8 +6,8 @@ describe('setWindow', () => {
   if (MODE == Mode.ODC) {
     it('should switch the current top-level context', async () => {
       await inline(`
-      <iframe src="${HOME_PAGE}/frame"/>
-    `);
+        <iframe src="${HOME_PAGE}/frame"/>
+      `);
 
       await driver.switchToWindow('frame');
 

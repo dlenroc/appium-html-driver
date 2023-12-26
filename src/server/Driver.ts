@@ -12,12 +12,16 @@ import { setParentFrame } from './commands/setParentFrame';
 import { setWindow } from './commands/setWindow';
 import { timeouts } from './commands/timeouts';
 import { remote } from './helpers/remote';
+import { capabilitiesConstraints } from './capabilitiesConstraints';
 
-export class Driver extends BaseDriver implements ExternalDriver {
+export class HtmlDriver
+  extends BaseDriver<typeof capabilitiesConstraints>
+  implements ExternalDriver<typeof capabilitiesConstraints>
+{
   static newMethodMap = {
     '/session/:sessionId/frame/parent': {
       POST: { command: 'setParentFrame' },
-    }
+    },
   };
 
   // Connections
@@ -30,10 +34,18 @@ export class Driver extends BaseDriver implements ExternalDriver {
   public pageLoadTimeoutMs = 300000;
   public newCommandTimeoutMs = 60000;
   public socketTimeoutMs = 15000;
-  public locatorStrategies = ['id', 'tag name', 'link text', 'partial link text', 'css selector', 'xpath'];
+  public desiredCapConstraints = capabilitiesConstraints;
+  public locatorStrategies = [
+    'id',
+    'tag name',
+    'link text',
+    'partial link text',
+    'css selector',
+    'xpath',
+  ];
 
   // WebDriver Commands
-  public createSession = createSession.bind(this, super.createSession.bind(this));
+  public createSession = createSession;
   public getTimeouts = getTimeouts;
   // @ts-ignore w3c command
   public timeouts = timeouts;
@@ -75,13 +87,4 @@ export class Driver extends BaseDriver implements ExternalDriver {
   public setCookie = remote('setCookie');
   public deleteCookie = remote('deleteCookie');
   public deleteCookies = remote('deleteCookies');
-
-  public get desiredCapConstraints() {
-    return {
-      debuggingAddress: {
-        isString: true,
-        presence: true,
-      },
-    };
-  }
 }

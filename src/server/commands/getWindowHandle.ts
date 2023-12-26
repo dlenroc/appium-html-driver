@@ -1,7 +1,7 @@
 import { errors } from '@appium/base-driver';
-import type { Driver } from '../Driver';
+import type { HtmlDriver } from '../Driver';
 
-export async function getWindowHandle(this: Driver): Promise<string> {
+export async function getWindowHandle(this: HtmlDriver): Promise<string> {
   const handle = await this.remote.getSession();
 
   if (!handle) {
