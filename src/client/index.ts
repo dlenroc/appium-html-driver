@@ -1,7 +1,7 @@
 /// <reference lib="dom" />
 
 import { io } from 'socket.io-client';
-import { command } from './commands/command';
+import { command } from './commands/command.js';
 
 const id = '<appium-html-driver-handle>';
 const udid = '<appium-html-driver-udid>';

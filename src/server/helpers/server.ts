@@ -8,7 +8,10 @@ import type { Namespace, Socket } from 'socket.io';
 import { Server } from 'socket.io';
 
 const servers = new WeakMap<HttpServer, Server>();
-const client = fs.readFileSync(path.resolve(__dirname, './client.js'), 'utf8');
+const client = fs.readFileSync(
+  path.resolve(new URL(import.meta.url + '/..').pathname, './client.js'),
+  'utf8'
+);
 
 export function isWindow(socket: Socket): boolean {
   return socket.handshake.query.type === 'window';

@@ -1,4 +1,4 @@
-import { fromWebDriverElement } from '../helpers/Element';
+import { fromWebDriverElement } from '../helpers/Element.js';
 
 export function getCssProperty(name: string, elementId: string): string {
   const element = fromWebDriverElement(elementId);

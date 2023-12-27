@@ -1,5 +1,5 @@
 import type { Cookie } from '@appium/types';
-import { InvalidArgument } from '../errors/InvalidArgument';
+import { InvalidArgument } from '../errors/InvalidArgument.js';
 
 export function setCookie(cookie: Cookie): void {
   if (!cookie.name) {

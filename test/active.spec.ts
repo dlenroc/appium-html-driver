@@ -1,4 +1,4 @@
-import { ELEMENT_ID, startBrowser } from './_base';
+import { ELEMENT_ID, startBrowser } from './_base.js';
 
 describe('active', () => {
   const { driver } = startBrowser();

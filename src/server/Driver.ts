@@ -1,18 +1,18 @@
 import { BaseDriver } from '@appium/base-driver';
 import type { Element, ExternalDriver } from '@appium/types';
-import { RemoteDevice } from './adapters/RemoteDevice';
-import { closeWindow } from './commands/closeWindow';
-import { createSession } from './commands/createSession';
-import { createNewWindow } from './commands/createNewWindow';
-import { getTimeouts } from './commands/getTimeouts';
-import { getWindowHandle } from './commands/getWindowHandle';
-import { getWindowHandles } from './commands/getWindowHandles';
-import { setFrame } from './commands/setFrame';
-import { setParentFrame } from './commands/setParentFrame';
-import { setWindow } from './commands/setWindow';
-import { timeouts } from './commands/timeouts';
-import { remote } from './helpers/remote';
-import { capabilitiesConstraints } from './capabilitiesConstraints';
+import { RemoteDevice } from './adapters/RemoteDevice.js';
+import { closeWindow } from './commands/closeWindow.js';
+import { createSession } from './commands/createSession.js';
+import { createNewWindow } from './commands/createNewWindow.js';
+import { getTimeouts } from './commands/getTimeouts.js';
+import { getWindowHandle } from './commands/getWindowHandle.js';
+import { getWindowHandles } from './commands/getWindowHandles.js';
+import { setFrame } from './commands/setFrame.js';
+import { setParentFrame } from './commands/setParentFrame.js';
+import { setWindow } from './commands/setWindow.js';
+import { timeouts } from './commands/timeouts.js';
+import { remote } from './helpers/remote.js';
+import { capabilitiesConstraints } from './capabilitiesConstraints.js';
 
 export class HtmlDriver
   extends BaseDriver<typeof capabilitiesConstraints>

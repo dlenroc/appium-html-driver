@@ -1,1 +1,1 @@
-export { HtmlDriver as Driver, HtmlDriver as default } from './Driver';
+export { HtmlDriver as Driver, HtmlDriver as default } from './Driver.js';

@@ -1,5 +1,5 @@
-import { fromWebDriverElement } from '../helpers/Element';
-import { getElementRect } from './getElementRect';
+import { fromWebDriverElement } from '../helpers/Element.js';
+import { getElementRect } from './getElementRect.js';
 
 export function elementDisplayed(elementId: string): boolean {
   const element = fromWebDriverElement(elementId);

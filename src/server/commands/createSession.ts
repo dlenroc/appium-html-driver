@@ -5,11 +5,11 @@ import type {
   W3CDriverCaps,
 } from '@appium/types';
 import { URL } from 'url';
-import { HtmlDriver } from '../Driver';
-import { DevToolsDevice } from '../adapters/DevToolsDevice';
-import { InstrumentedDevice } from '../adapters/InstrumentedDevice';
-import { capabilitiesConstraints } from '../capabilitiesConstraints';
-import { getNamespace } from '../helpers/server';
+import { HtmlDriver } from '../Driver.js';
+import { DevToolsDevice } from '../adapters/DevToolsDevice.js';
+import { InstrumentedDevice } from '../adapters/InstrumentedDevice.js';
+import { capabilitiesConstraints } from '../capabilitiesConstraints.js';
+import { getNamespace } from '../helpers/server.js';
 
 export async function createSession(
   this: HtmlDriver,

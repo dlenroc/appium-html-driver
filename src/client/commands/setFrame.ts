@@ -1,7 +1,7 @@
 import type { Element } from '@appium/types';
-import { InvalidArgument } from '../errors/InvalidArgument';
-import { NoSuchFrame } from '../errors/NoSuchFrame';
-import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element';
+import { InvalidArgument } from '../errors/InvalidArgument.js';
+import { NoSuchFrame } from '../errors/NoSuchFrame.js';
+import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element.js';
 
 export function setFrame(id: null | number | string | Element): any {
   // switch to main frame

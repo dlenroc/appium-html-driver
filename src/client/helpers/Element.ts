@@ -1,6 +1,6 @@
 import type { Element as WebDriverElement } from '@appium/types';
 import { v4 as uuid } from 'uuid';
-import { StaleElementReference } from '../errors/StaleElementReference';
+import { StaleElementReference } from '../errors/StaleElementReference.js';
 
 // @ts-ignore
 const ELEMENTS: Record<string, HTMLElement> = window.APPIUM_HTML_DRIVER_ELEMENTS || (window.APPIUM_HTML_DRIVER_ELEMENTS = {});

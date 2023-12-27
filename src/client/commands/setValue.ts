@@ -1,6 +1,6 @@
-import { ElementNotInteractable } from '../errors/ElementNotInteractable';
-import { fromWebDriverElement } from '../helpers/Element';
-import { ATOMIC_TYPES, isEditableElement } from '../helpers/isEditableElement';
+import { ElementNotInteractable } from '../errors/ElementNotInteractable.js';
+import { fromWebDriverElement } from '../helpers/Element.js';
+import { ATOMIC_TYPES, isEditableElement } from '../helpers/isEditableElement.js';
 
 export function setValue(text: string | string[], elementId: string): void {
   text = Array.isArray(text) ? text.join('') : text;

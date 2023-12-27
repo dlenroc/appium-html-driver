@@ -1,6 +1,6 @@
 import cssesc from 'cssesc';
-import { NoSuchElement } from '../errors/NoSuchElement';
-import { fromWebDriverElement } from './Element';
+import { NoSuchElement } from '../errors/NoSuchElement.js';
+import { fromWebDriverElement } from './Element.js';
 
 export function getElement(strategy: string, selector: string, context?: string): HTMLElement {
   const parent = context ? fromWebDriverElement(context) : document.documentElement;

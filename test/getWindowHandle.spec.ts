@@ -1,4 +1,4 @@
-import { startBrowser } from './_base';
+import { startBrowser } from './_base.js';
 
 describe('getWindowHandle', () => {
   const { driver } = startBrowser();

@@ -1,5 +1,5 @@
 import cssesc from 'cssesc';
-import { fromWebDriverElement } from './Element';
+import { fromWebDriverElement } from './Element.js';
 
 export function getElements(strategy: string, selector: string, context?: string): HTMLElement[] {
   const parent = context ? fromWebDriverElement(context) : document.documentElement;

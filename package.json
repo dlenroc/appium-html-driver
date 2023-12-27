@@ -10,6 +10,7 @@
     "webdriver"
   ],
   "license": "MIT",
+  "type": "module",
   "main": "dist/server.js",
   "browser": "dist/client.js",
   "types": "src/server/index.ts",
@@ -20,8 +21,8 @@
   "scripts": {
     "build": "NODE_OPTIONS=--max_old_space_size=6144 rollup -c",
     "test": "npm run test:odc && npm run test:cdp",
-    "test:odc": "MODE=ODC mocha -r tsx/cjs -b -t 5000 test/**/*.ts",
-    "test:cdp": "MODE=CDP mocha -r tsx/cjs -b -t 5000 test/**/*.ts"
+    "test:odc": "MODE=ODC mocha -r tsx -b -t 5000 test/**/*.ts",
+    "test:cdp": "MODE=CDP mocha -r tsx -b -t 5000 test/**/*.ts"
   },
   "engines": {
     "node": ">=18"

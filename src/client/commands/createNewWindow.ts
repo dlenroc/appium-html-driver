@@ -1,6 +1,6 @@
 import type { NewWindow } from '@appium/types';
 import { v4 as uuid } from 'uuid';
-import { InvalidArgument } from '../errors/InvalidArgument';
+import { InvalidArgument } from '../errors/InvalidArgument.js';
 
 export function createNewWindow(this: { url?: string }, type: string): NewWindow {
   const handle = uuid();

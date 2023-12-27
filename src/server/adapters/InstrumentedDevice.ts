@@ -1,7 +1,7 @@
 import { errorFromW3CJsonCode, errors } from '@appium/base-driver';
 import type { Namespace, Server } from 'socket.io';
-import { getSocket } from '../helpers/server';
-import { RemoteDevice } from './RemoteDevice';
+import { getSocket } from '../helpers/server.js';
+import { RemoteDevice } from './RemoteDevice.js';
 
 export class InstrumentedDevice implements RemoteDevice {
   private sessionId!: string;
