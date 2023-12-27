@@ -1,6 +1,6 @@
-import { InvalidElementState } from '../errors/InvalidElementState';
-import { fromWebDriverElement } from '../helpers/Element';
-import { isEditableElement } from '../helpers/isEditableElement';
+import { InvalidElementState } from '../errors/InvalidElementState.js';
+import { fromWebDriverElement } from '../helpers/Element.js';
+import { isEditableElement } from '../helpers/isEditableElement.js';
 
 export function clear(elementId: string): void {
   const element = fromWebDriverElement(elementId);

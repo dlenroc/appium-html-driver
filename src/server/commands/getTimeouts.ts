@@ -1,4 +1,4 @@
-import type { HtmlDriver } from '../Driver';
+import type { HtmlDriver } from '../Driver.js';
 
 export async function getTimeouts(this: HtmlDriver): Promise<Record<string, number>> {
   return {

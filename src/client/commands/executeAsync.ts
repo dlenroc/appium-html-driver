@@ -1,6 +1,6 @@
 import { cloneDeepWith, has, isElement } from 'lodash-es';
-import { JavaScriptError } from '../errors/JavaScriptError';
-import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element';
+import { JavaScriptError } from '../errors/JavaScriptError.js';
+import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element.js';
 
 export async function executeAsync(script: string, args: unknown[]): Promise<unknown> {
   const normalizedArgs = cloneDeepWith(args, (value) => {

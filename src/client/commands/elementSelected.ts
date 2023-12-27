@@ -1,4 +1,4 @@
-import { fromWebDriverElement } from '../helpers/Element';
+import { fromWebDriverElement } from '../helpers/Element.js';
 
 export function elementSelected(elementId: string): boolean {
   const element = fromWebDriverElement(elementId);

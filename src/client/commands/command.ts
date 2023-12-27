@@ -1,4 +1,4 @@
-import { fromWebDriverElement } from '../helpers/Element';
+import { fromWebDriverElement } from '../helpers/Element.js';
 
 export async function command({ expression, args, options }: { expression: string; args: any[]; options: any }, callback: (result: any) => any) {
   try {

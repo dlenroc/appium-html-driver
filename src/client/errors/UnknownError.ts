@@ -1,3 +1,3 @@
-import { WebDriverError } from './WebDriverError';
+import { WebDriverError } from './WebDriverError.js';
 
 export const UnknownError = WebDriverError.forCode('unknown error');

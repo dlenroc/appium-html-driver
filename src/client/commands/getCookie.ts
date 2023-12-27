@@ -1,6 +1,6 @@
 import type { Cookie } from '@appium/types';
-import { NoSuchCookie } from '../errors/NoSuchCookie';
-import { getCookies } from './getCookies';
+import { NoSuchCookie } from '../errors/NoSuchCookie.js';
+import { getCookies } from './getCookies.js';
 
 export function getCookie(name: string): Cookie {
   const cookies = getCookies();

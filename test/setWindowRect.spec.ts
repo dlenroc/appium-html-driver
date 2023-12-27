@@ -1,4 +1,4 @@
-import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base';
+import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base.js';
 
 describe('setWindowRect', () => {
   const { driver } = startBrowser({ headless: false });

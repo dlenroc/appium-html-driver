@@ -1,7 +1,7 @@
 import { errors } from '@appium/base-driver';
-import type { HtmlDriver } from '../Driver';
-import { remote } from '../helpers/remote';
-import { retrying } from '../helpers/retrying';
+import type { HtmlDriver } from '../Driver.js';
+import { remote } from '../helpers/remote.js';
+import { retrying } from '../helpers/retrying.js';
 
 export async function closeWindow(this: HtmlDriver): Promise<string[]> {
   const handle = await this.getWindowHandle();

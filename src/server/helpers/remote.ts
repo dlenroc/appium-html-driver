@@ -2,7 +2,7 @@ import { errors } from '@appium/base-driver';
 import type { Element, ExternalDriver } from '@appium/types';
 import fs from 'fs/promises';
 import path from 'path';
-import type { HtmlDriver } from '../Driver';
+import type { HtmlDriver } from '../Driver.js';
 
 const scripts: Record<string, string> = {};
 
@@ -16,13 +16,11 @@ export function remote<Command extends keyof ExternalDriver | string>(command: C
       options.frame = this.frames[this.frames.length - 1];
     }
 
-    return await this.remote.execute(
-      `
-        ${scripts[command] || (scripts[command] = await fs.readFile(path.resolve(__dirname, 'commands', command + '.js'), 'utf-8'))}
-        return driver.${command}.apply(this, arguments);
-      `,
-      options,
-      args
-    );
+    if (!scripts[command]) {
+      const content = await fs.readFile(path.resolve(new URL(import.meta.url + '/..').pathname, 'commands', command + '.js'), 'utf-8');
+      scripts[command] = `${content}\nreturn driver.${command}.apply(this, arguments);`
+    }
+
+    return await this.remote.execute(scripts[command], options, args);
   } as any;
 }

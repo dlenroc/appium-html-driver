@@ -1,4 +1,4 @@
-import { inline, NOT_EXISTING_ELEMENT, startBrowser } from './_base';
+import { inline, NOT_EXISTING_ELEMENT, startBrowser } from './_base.js';
 
 describe('elementDisplayed', () => {
   const { driver } = startBrowser();

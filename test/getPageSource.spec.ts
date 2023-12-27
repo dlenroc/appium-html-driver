@@ -1,4 +1,4 @@
-import { inline, startBrowser } from './_base';
+import { inline, startBrowser } from './_base.js';
 
 describe('getPageSource', () => {
   const { driver } = startBrowser();

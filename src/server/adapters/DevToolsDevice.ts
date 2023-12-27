@@ -3,15 +3,21 @@ import CDP from 'chrome-remote-interface';
 import { randomUUID } from 'crypto';
 import fs from 'fs';
 import path from 'path';
-import { retrying } from '../helpers/retrying';
-import { RemoteDevice } from './RemoteDevice';
+import { retrying } from '../helpers/retrying.js';
+import { RemoteDevice } from './RemoteDevice.js';
 
 export class DevToolsDevice implements RemoteDevice {
   private cdp!: CDP.Client;
   private options!: CDP.Options;
   private targetId!: string;
   private sessionId!: string;
-  private commandScript = fs.readFileSync(path.resolve(__dirname, 'commands', 'command.js'));
+  private commandScript = fs.readFileSync(
+    path.resolve(
+      new URL(import.meta.url + '/..').pathname,
+      'commands',
+      'command.js'
+    )
+  );
 
   async open(options: CDP.Options) {
     this.options = options;

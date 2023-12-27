@@ -1,5 +1,5 @@
 import type { Rect } from '@appium/types';
-import { fromWebDriverElement } from '../helpers/Element';
+import { fromWebDriverElement } from '../helpers/Element.js';
 
 export function getElementRect(elementId: string): Rect {
   const element = fromWebDriverElement(elementId);

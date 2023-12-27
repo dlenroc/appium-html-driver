@@ -1,5 +1,5 @@
 import type { Rect } from '@appium/types';
-import { setWindowRect } from './setWindowRect';
+import { setWindowRect } from './setWindowRect.js';
 
 export function maximizeWindow(): Rect {
   const width = window.screen.availWidth;

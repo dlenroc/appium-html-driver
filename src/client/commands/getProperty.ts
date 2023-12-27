@@ -1,4 +1,4 @@
-import { fromWebDriverElement } from '../helpers/Element';
+import { fromWebDriverElement } from '../helpers/Element.js';
 
 export function getProperty(name: string, elementId: string): string | null {
   const element = fromWebDriverElement(elementId);

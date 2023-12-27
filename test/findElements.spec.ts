@@ -1,4 +1,4 @@
-import { ELEMENT_ID, inline, startBrowser } from './_base';
+import { ELEMENT_ID, inline, startBrowser } from './_base.js';
 
 describe('findElements', () => {
   const { driver } = startBrowser();

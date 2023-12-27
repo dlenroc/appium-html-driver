@@ -1,7 +1,7 @@
 import scrollIntoView from 'scroll-into-view-if-needed';
-import { ElementNotInteractable } from '../errors/ElementNotInteractable';
-import { fromWebDriverElement } from '../helpers/Element';
-import { isPointerInteractable } from '../helpers/isPointerInteractable';
+import { ElementNotInteractable } from '../errors/ElementNotInteractable.js';
+import { fromWebDriverElement } from '../helpers/Element.js';
+import { isPointerInteractable } from '../helpers/isPointerInteractable.js';
 
 export function click(elementId: string): void {
   const element = fromWebDriverElement(elementId);
