@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/dlenroc/appium-html-driver/compare/v0.0.3...v0.0.4) (2024-01-08)
+
+
+### Bug Fixes
+
+* `HtmlDriver` prefix in logs ([fd54dec](https://github.com/dlenroc/appium-html-driver/commit/fd54dec03bd95a3127e0b0f8a57c24a08d68ec6f))
+
 ## [0.0.3](https://github.com/dlenroc/appium-html-driver/compare/v0.0.2...v0.0.3) (2022-08-14)
 
 
