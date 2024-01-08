@@ -3,7 +3,7 @@ import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base.js';
 describe('setWindowRect', () => {
   const { driver } = startBrowser({ headless: false });
   const rect = { x: 100, y: 200, width: 800, height: 600 };
-  const newRect = { x: 200, y: 400, width: 1280, height: 720 };
+  const newRect = { x: 150, y: 250, width: 1280, height: 720 };
 
   it('should set window rect', async () => {
     await driver.setWindowRect(rect.x, rect.y, rect.width, rect.height)

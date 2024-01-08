@@ -20,8 +20,6 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build
-      - name: Install HTML driver
-        run: npx appium driver install --source local "$(pwd)"
       - name: Run Appium server
         run: |
           npx appium server &

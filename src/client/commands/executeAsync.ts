@@ -1,24 +1,15 @@
-import { cloneDeepWith, has, isElement } from 'lodash-es';
 import { JavaScriptError } from '../errors/JavaScriptError.js';
-import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element.js';
+import { fromWebDriver, toWebDriver } from '../helpers/WebDriver.js';
 
 export async function executeAsync(script: string, args: unknown[]): Promise<unknown> {
-  const normalizedArgs = cloneDeepWith(args, (value) => {
-    if (has(value, WEB_ELEMENT_IDENTIFIER)) {
-      return fromWebDriverElement(value[WEB_ELEMENT_IDENTIFIER]);
-    }
-  });
+  args = fromWebDriver(args);
 
   try {
-    let result = await new Promise<any>((resolve) => {
-      return new Function(script)(...normalizedArgs, resolve);
-    });
-
-    return cloneDeepWith(result, (value) => {
-      if (isElement(value)) {
-        return toWebDriverElement(value);
-      }
-    });
+    return toWebDriver(
+      await new Promise<any>((resolve) => {
+        return new Function(script)(...args, resolve);
+      })
+    );
   } catch (e) {
     throw JavaScriptError(e instanceof Error ? e.message : JSON.stringify(e));
   }

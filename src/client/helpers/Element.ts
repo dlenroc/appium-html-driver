@@ -16,7 +16,7 @@ export function fromWebDriverElement(id: string | WebDriverElement): HTMLElement
   return element;
 }
 
-export function toWebDriverElement(element: Element): WebDriverElement {
+export function toWebDriverElement(element: Node): WebDriverElement {
   for (const [id, candidate] of Object.entries(ELEMENTS)) {
     if (candidate === element) {
       return { [WEB_ELEMENT_IDENTIFIER]: id };

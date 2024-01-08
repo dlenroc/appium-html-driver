@@ -20,7 +20,7 @@ export default [
     plugins: [
       nodeResolve(),
       typescript(),
-      terser(),
+      terser({ mangle: false }),
     ],
   },
   {
