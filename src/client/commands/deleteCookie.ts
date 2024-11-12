@@ -1,5 +1,5 @@
-import { setCookie } from './setCookie.js';
+import type { Driver } from '../Driver.js';
 
-export function deleteCookie(name: string): void {
-  setCookie({ name, value: '', expiry: 0 });
+export function deleteCookie(this: Driver, name: string): void {
+  this.setCookie({ name, value: '', expiry: 0 });
 }

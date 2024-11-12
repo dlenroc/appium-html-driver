@@ -1,8 +1,8 @@
 import type { Rect } from '@appium/types';
+import type { Driver } from '../Driver.js';
 import { InvalidArgument } from '../errors/InvalidArgument.js';
-import { getWindowRect } from './getWindowRect.js';
 
-export function setWindowRect(x?: number, y?: number, width?: number, height?: number): Rect {
+export function setWindowRect(this: Driver, x?: number, y?: number, width?: number, height?: number): Rect {
   const hasX = typeof x === 'number';
   const hasY = typeof y === 'number';
   const hasWidth = typeof width === 'number';
@@ -26,5 +26,5 @@ export function setWindowRect(x?: number, y?: number, width?: number, height?: n
     }
   }
 
-  return getWindowRect();
+  return this.getWindowRect();
 }

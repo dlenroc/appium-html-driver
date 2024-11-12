@@ -1,17 +1,18 @@
-import { performance } from 'perf_hooks';
-import { setTimeout } from 'timers';
+import { performance } from 'node:perf_hooks';
+import { setTimeout as sleep } from 'node:timers/promises';
 
-export async function retrying<Type>(options: { duration?: number; timeout: number; command: () => Promise<Type>; validate: (result?: Type, error?: any) => boolean }): Promise<Type> {
-  const duration = options.duration || 500;
+export async function retrying<Type>(options: { timeout: number; command: () => Type | Promise<Type>; validate: (result?: Type, error?: unknown) => boolean }): Promise<Type> {
+  const duration = 200;
   const endTimestamp = performance.now() + options.timeout;
 
-  while (true) {
-    let result;
-    let exception;
-    let hasException;
+  let exception: unknown;
+  let hasException: boolean;
+  let result: Type | undefined;
 
+  while (true) {
     try {
       result = await options.command();
+      hasException = false;
     } catch (e) {
       exception = e;
       hasException = true;
@@ -29,9 +30,9 @@ export async function retrying<Type>(options: { duration?: number; timeout: numb
     }
 
     if (elapsed > duration) {
-      await new Promise(resolve => setTimeout(resolve, duration));
+      await sleep(duration);
     } else {
-      await new Promise(resolve => setTimeout(resolve, elapsed));
+      await sleep(elapsed);
     }
   }
 }

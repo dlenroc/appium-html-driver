@@ -1,3 +1,5 @@
-export function title(): string {
-  return document.title;
+import type { Driver } from '../Driver';
+
+export function title(this: Driver): string {
+  return window.document.title;
 }

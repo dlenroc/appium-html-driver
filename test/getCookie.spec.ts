@@ -1,3 +1,4 @@
+import { describe, it } from 'node:test';
 import { startBrowser } from './_base.js';
 
 describe('getCookie', () => {

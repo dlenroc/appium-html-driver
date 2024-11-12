@@ -1,3 +1,4 @@
+import { describe, it } from 'node:test';
 import { ELEMENT_ID, startBrowser } from './_base.js';
 
 describe('active', () => {

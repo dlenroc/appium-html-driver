@@ -1,3 +1,5 @@
-export function setWindow(): void {
+import type { Driver } from '../Driver';
+
+export function setWindow(this: Driver): void {
   window.focus();
 }

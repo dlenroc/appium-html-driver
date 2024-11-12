@@ -1,6 +1,5 @@
-import { deleteCookie } from './deleteCookie.js';
-import { getCookies } from './getCookies.js';
+import type { Driver } from '../Driver.js';
 
-export function deleteCookies(): void {
-  getCookies().forEach(({ name }) => deleteCookie(name));
+export function deleteCookies(this: Driver): void {
+  this.getCookies().forEach(({ name }) => this.deleteCookie(name));
 }

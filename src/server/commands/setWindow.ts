@@ -8,7 +8,7 @@ export async function setWindow(this: HtmlDriver, handle: string): Promise<void>
     throw new errors.NoSuchWindowError(`window with handle '${handle}' does not exist`);
   }
 
-  await this.remote.setSession(handle);
+  this.opts.handle = handle;
 
   await remote('setWindow').call(this, handle);
 }
