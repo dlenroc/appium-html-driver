@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.0](https://github.com/dlenroc/appium-html-driver/compare/v0.0.4...v0.1.0) (2024-11-16)
+
+
+### Features
+
+* expand supported engines ([b1a53c5](https://github.com/dlenroc/appium-html-driver/commit/b1a53c5c101b3aeba0353f9b78cca708b4adee01))
+
 ## [0.0.4](https://github.com/dlenroc/appium-html-driver/compare/v0.0.3...v0.0.4) (2024-01-08)
 
 
