@@ -1,4 +1,5 @@
-import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base.js';
+import { describe, it } from 'node:test';
+import { HOME_PAGE, inline, startBrowser } from './_base.js';
 
 describe('createWindow', () => {
   const { driver } = startBrowser();
@@ -30,16 +31,14 @@ describe('createWindow', () => {
       .should.eventually.be.rejected.with.property('name', 'invalid argument');
   });
 
-  if (MODE == Mode.ODC) {
-    it('should throw UnsupportedOperation for instrumented frame', async () => {
-      await inline(`
-        <iframe src="${HOME_PAGE}/frame"/>
-      `);
+  it('should throw UnsupportedOperation for instrumented frame', async () => {
+    await inline(`
+      <iframe src="${HOME_PAGE}&handle=frame"/>
+    `);
 
-      await driver.switchToWindow('frame');
+    await driver.switchToWindow('frame');
 
-      await driver.createWindow('window')
-        .should.eventually.be.rejected.with.property('name', 'unsupported operation');
-    });
-  }
+    await driver.createWindow('window')
+      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
+  });
 });

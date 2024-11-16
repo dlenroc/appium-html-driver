@@ -1,12 +1,14 @@
 import type { Element } from '@appium/types';
+import type { Driver } from '../Driver.js';
 import { InvalidArgument } from '../errors/InvalidArgument.js';
 import { NoSuchFrame } from '../errors/NoSuchFrame.js';
-import { fromWebDriverElement, toWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element.js';
+import { fromWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element.js';
 
-export function setFrame(id: null | number | string | Element): any {
+export function setFrame(this: Driver, id: null | number | string | Element): void {
   // switch to main frame
   if (id === null) {
-    return null;
+    this.windows = [window];
+    return;
   }
 
   // switch to frame by index
@@ -15,20 +17,22 @@ export function setFrame(id: null | number | string | Element): any {
       throw InvalidArgument(`index must be a non-negative integer`);
     }
 
-    const frames = window.frames;
+    const frames = this.currentWindow.frames;
     if (id >= frames.length) {
       throw NoSuchFrame(`frame with index ${id} does not exist`);
     }
 
-    return toWebDriverElement(frames[id].frameElement as unknown as HTMLElement);
+    this.windows.push(frames[id]);
+    return;
   }
 
   // switch to frame by name
   if (typeof id === 'string') {
-    const frames = window.frames;
+    const frames = this.currentWindow.frames;
     for (let i = 0; i < frames.length; i++) {
-      if (frames[i].name === id) {
-        return toWebDriverElement(frames[i].frameElement as unknown as HTMLElement);
+      if (frames[i]?.name === id) {
+        this.windows.push(frames[i]);
+        return;
       }
     }
 
@@ -42,8 +46,9 @@ export function setFrame(id: null | number | string | Element): any {
       throw NoSuchFrame(`element is not a frame`);
     }
 
-    return toWebDriverElement(element);
+    this.windows.push(element.contentWindow!);
+    return;
   }
 
-  throw InvalidArgument(`invalid frame identifier: ${id}`);
+  throw InvalidArgument(`invalid frame identifier: ${JSON.stringify(id)}`);
 }

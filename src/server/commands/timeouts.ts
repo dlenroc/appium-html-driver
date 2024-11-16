@@ -1,7 +1,8 @@
 import { errors } from '@appium/base-driver';
 import type { HtmlDriver } from '../Driver.js';
 
-export async function timeouts(this: HtmlDriver, type?: string, ms?: number, script?: number, pageLoad?: number, implicit?: number): Promise<void> {
+// eslint-disable-next-line @typescript-eslint/require-await
+export async function timeouts(this: HtmlDriver, _type: string, _ms: number | string, script?: number, pageLoad?: number, implicit?: number): Promise<void> {
   if (script != null && script < 0) {
     throw new errors.InvalidArgumentError('timeouts.script: expected positive number, got ' + script);
   }

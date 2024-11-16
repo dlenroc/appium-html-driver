@@ -1,6 +1,5 @@
 export function isPointerInteractable(element: HTMLElement): boolean {
   const window = element.ownerDocument?.defaultView;
-
   if (!window) {
     return false;
   }
@@ -14,8 +13,5 @@ export function isPointerInteractable(element: HTMLElement): boolean {
     return false;
   }
 
-  const clientWidth = window.innerWidth || document.documentElement.clientWidth;
-  const clientHeight = window.innerHeight || document.documentElement.clientHeight;
-
-  return rect.x > 0 && rect.y > 0 && rect.bottom < clientHeight && rect.right < clientWidth;
+  return true;
 }

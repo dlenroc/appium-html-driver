@@ -15,9 +15,7 @@ export async function closeWindow(this: HtmlDriver): Promise<string[]> {
       const handles = await this.getWindowHandles();
 
       if (handles.includes(handle)) {
-        throw new errors.UnsupportedOperationError(
-          'window close confirmation not received'
-        );
+        throw new errors.UnsupportedOperationError('window close confirmation not received');
       }
 
       return handles;

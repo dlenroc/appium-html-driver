@@ -1,3 +1,5 @@
-export function getPageSource(): string {
-  return window.document.documentElement.outerHTML;
+import type { Driver } from '../Driver';
+
+export function getPageSource(this: Driver): string {
+  return this.currentWindow.document.documentElement.outerHTML;
 }

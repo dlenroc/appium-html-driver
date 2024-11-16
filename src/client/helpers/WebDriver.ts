@@ -1,20 +1,12 @@
 import type { Element as WebDriverElement } from '@appium/types';
-import {
-  WEB_ELEMENT_IDENTIFIER,
-  fromWebDriverElement,
-  toWebDriverElement,
-} from './Element';
+import { WEB_ELEMENT_IDENTIFIER, fromWebDriverElement, toWebDriverElement } from './Element';
 
-export function toWebDriver(value: unknown): any {
-  return typeof value === 'object'
-    ? JSON.parse(JSON.stringify(value, toWebDriverReplacer))
-    : value;
+export function toWebDriver(value: unknown): unknown {
+  return typeof value === 'object' ? JSON.parse(JSON.stringify(value, toWebDriverReplacer)) : value;
 }
 
-export function fromWebDriver(value: unknown): any {
-  return typeof value === 'object'
-    ? JSON.parse(JSON.stringify(value), fromWebDriverReplacer)
-    : value;
+export function fromWebDriver(value: unknown): unknown {
+  return typeof value === 'object' ? JSON.parse(JSON.stringify(value), fromWebDriverReplacer) : value;
 }
 
 function toWebDriverReplacer(_: string, value: unknown): unknown {

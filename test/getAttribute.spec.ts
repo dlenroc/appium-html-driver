@@ -1,3 +1,4 @@
+import { describe, it } from 'node:test';
 import { inline, NOT_EXISTING_ELEMENT, startBrowser } from './_base.js';
 
 describe('getAttribute', () => {

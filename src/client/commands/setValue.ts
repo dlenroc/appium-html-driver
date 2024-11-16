@@ -1,19 +1,20 @@
+import type { Driver } from '../Driver.js';
 import { ElementNotInteractable } from '../errors/ElementNotInteractable.js';
 import { fromWebDriverElement } from '../helpers/Element.js';
 import { ATOMIC_TYPES, isEditableElement } from '../helpers/isEditableElement.js';
 
-export function setValue(text: string | string[], elementId: string): void {
+export function setValue(this: Driver, text: string | string[], elementId: string): void {
   text = Array.isArray(text) ? text.join('') : text;
 
   const element = fromWebDriverElement(elementId);
-  const isFocused = window.document.activeElement === element;
+  const isFocused = this.currentWindow.document.activeElement === element;
 
   if (!isEditableElement(element)) {
     throw ElementNotInteractable('element is not editable');
   }
 
   if (element.isContentEditable) {
-    let selection = window.getSelection();
+    const selection = this.currentWindow.getSelection();
 
     if (!isFocused) {
       element.focus();
@@ -22,7 +23,7 @@ export function setValue(text: string | string[], elementId: string): void {
     }
 
     if (selection?.rangeCount) {
-      const node = window.document.createTextNode(text);
+      const node = this.currentWindow.document.createTextNode(text);
       const range = selection.getRangeAt(0);
       range.deleteContents();
       range.insertNode(node);
@@ -45,7 +46,7 @@ export function setValue(text: string | string[], elementId: string): void {
     }
   }
 
-  if (tagName === 'INPUT' && ATOMIC_TYPES.indexOf(input.type.toLowerCase()) !== -1) {
+  if (tagName === 'INPUT' && ~ATOMIC_TYPES.indexOf(input.type.toLowerCase())) {
     input.value = text;
   } else {
     const value = input.value;

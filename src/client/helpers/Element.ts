@@ -2,10 +2,11 @@ import type { Element as WebDriverElement } from '@appium/types';
 import { v4 as uuid } from 'uuid';
 import { StaleElementReference } from '../errors/StaleElementReference.js';
 
-// @ts-ignore
-const ELEMENTS: Record<string, HTMLElement> = window.APPIUM_HTML_DRIVER_ELEMENTS || (window.APPIUM_HTML_DRIVER_ELEMENTS = {});
+// @ts-expect-error global element store
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const ELEMENTS: Record<string, HTMLElement> = (window.APPIUM_HTML_PLUGINS_ELEMENTS ??= {});
 
-export const WEB_ELEMENT_IDENTIFIER: 'element-6066-11e4-a52e-4f735466cecf' = 'element-6066-11e4-a52e-4f735466cecf';
+export const WEB_ELEMENT_IDENTIFIER = 'element-6066-11e4-a52e-4f735466cecf';
 
 export function fromWebDriverElement(id: string | WebDriverElement): HTMLElement {
   const element = ELEMENTS[typeof id === 'string' ? id : id[WEB_ELEMENT_IDENTIFIER]];
@@ -17,8 +18,8 @@ export function fromWebDriverElement(id: string | WebDriverElement): HTMLElement
 }
 
 export function toWebDriverElement(element: Node): WebDriverElement {
-  for (const [id, candidate] of Object.entries(ELEMENTS)) {
-    if (candidate === element) {
+  for (const id in ELEMENTS) {
+    if (ELEMENTS[id] === element) {
       return { [WEB_ELEMENT_IDENTIFIER]: id };
     }
   }

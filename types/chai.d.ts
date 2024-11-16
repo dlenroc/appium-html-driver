@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /// <reference types="chai" />
 /// <reference types="chai-things" />
 /// <reference types="chai-as-promised" />

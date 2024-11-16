@@ -1,7 +1,8 @@
+import type { Driver } from '../Driver.js';
 import { fromWebDriverElement } from '../helpers/Element.js';
 
-export function getCssProperty(name: string, elementId: string): string {
+export function getCssProperty(this: Driver, name: string, elementId: string): string {
   const element = fromWebDriverElement(elementId);
-  const style = window.getComputedStyle(element);
+  const style = this.currentWindow.getComputedStyle(element);
   return style.getPropertyValue(name);
 }

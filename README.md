@@ -1,4 +1,4 @@
-# Appium HTML Driver · [![NPM Version](https://img.shields.io/npm/v/@dlenroc/appium-html-driver?cacheSeconds=86400)](https://www.npmjs.com/package/@dlenroc/appium-html-driver) ![Node.js Version](https://img.shields.io/node/v/@dlenroc/appium-html-driver)
+# Appium HTML Driver · [![NPM Version](https://img.shields.io/npm/v/@dlenroc/appium-html-driver?cacheSeconds=86400)](https://www.npmjs.com/package/@dlenroc/appium-html-driver) ![Node.js Version](https://img.shields.io/node/v/@dlenroc/appium-html-driver) ![Chrome 32](https://img.shields.io/badge/-32-%234285F4?logo=googlechrome&logoColor=white) ![Firefox 29](https://img.shields.io/badge/-29-%23FF7139?logo=firefox%20browser&logoColor=white) ![Safari 8](https://img.shields.io/badge/-8-%23007AFF?logo=safari&logoColor=white)
 
 Appium HTML Driver is a WebDriver that allows controlling applications written using web technologies, regardless of the device they are running on.
 
@@ -8,56 +8,20 @@ Appium HTML Driver is a WebDriver that allows controlling applications written u
 appium driver install --source npm @dlenroc/appium-html-driver
 ```
 
-## Connection
-
-### DevTools Protocol
-
-If target supports the devtools protocol, then we can connect to it via [chrome-remote-interface](https://github.com/cyrus-and/chrome-remote-interface).
-
-1. Get the DevTools target address (sample with `Google Chrome`)
-
-   ```shell
-   $ "<browser.path>" --user-data-dir="$(mktemp -d)" --remote-debugging-port="9222"
-
-   DevTools listening on ws://127.0.0.1:9222/devtools/browser/c8f3b64d-aa40-4c56-b1d4-b4796fb24eae
-   ```
-
-2. Attach and run test
-
-   ```typescript
-   await driver = await remote({
-     'capabilities': {
-       'platformName': 'html',
-       'appium:automationName': 'html',
-       'appium:debuggingAddress': 'ws://127.0.0.1:9222/devtools/browser/c8f3b64d-aa40-4c56-b1d4-b4796fb24eae'
-     },
-   });
-
-   // Attach to target
-   const handles = await driver.getWindowHandles();
-   await driver.switchToWindow(handles[0]);
-
-   // Conduct testing
-   await driver.getUrl()
-     .should.eventually.be.fulfilled;
-   ```
-
-### On-Device Component
-
-If target doesn't support [DevTools Protocol](#devtools-protocol) or you need access to pages it can't access, then `ODC` may be what you need.
+## Usage
 
 1. Instrumentation
 
    Inject the following code in every HTML file that belongs to your application.
 
    ```html
-   <script src="{origin}/appium-html-driver/js/{udid}/{handle}"></script>
+   <script src="{origin}/appium-html-driver/js?udid={udid}&handle={handle}"></script>
    ```
 
    Where:
 
    - origin - address of the Appium server, for example: `http://192.168.0.2:4723`.
-   - udid - identifier that represent your device, for > example: `{device-name}-{serial-number}`.
+   - udid _(optional)_ - identifier that represent your device, default to client's IP address.
    - handle _(optional)_ - identifier that will represent the window handle.
 
 2. Attach and run test
@@ -67,7 +31,7 @@ If target doesn't support [DevTools Protocol](#devtools-protocol) or you need ac
      'capabilities': {
        'platformName': 'html',
        'appium:automationName': 'html',
-       'appium:debuggingAddress': `odc://${udid}/${handle}`
+       'appium:udid': udid
      },
    });
 
@@ -86,23 +50,14 @@ If target doesn't support [DevTools Protocol](#devtools-protocol) or you need ac
      .should.eventually.be.fulfilled;
    ```
 
-NOTE: Because of how the instrumentation process works, the test session should start first, and then the application.
-
-If this is a problem, you can initialize the driver yourself once and then not care about the mentioned limitation:
-
-```shell
-curl 'http://localhost:4723/session' \
-  -H 'content-type: application/json;charset=utf-8' \
-  -d '{ "capabilities": { "alwaysMatch": { "platformName": "html", "appium:automationName": "html", "appium:debuggingAddress": "odc://init" } } }'
-```
-
 ## Capabilities
 
-| Capability                | Required |  Type  | Description                   |
-| ------------------------- | :------: | :----: | ----------------------------- |
-| `platformName`            |    +     | string | Must be `html`                |
-| `appium:automationName`   |    +     | string | Must be `html`                |
-| `appium:debuggingAddress` |    +     | string | See [Connection](#connection) |
+| Capability              | Required |  Type  | Description                                            |
+| ----------------------- | :------: | :----: | ------------------------------------------------------ |
+| `platformName`          |    +     | string | Must be `html`                                         |
+| `appium:automationName` |    +     | string | Must be `html`                                         |
+| `appium:udid`           |    +     | string | See [Connection](#connection)                          |
+| `appium:handle`         |    -     | string | The window handle to switch to during session creation |
 
 ## Commands
 

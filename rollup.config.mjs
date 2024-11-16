@@ -1,9 +1,11 @@
+/* eslint-disable */
+
+import { getBabelOutputPlugin } from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
+import { nodeResolve } from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import fs from 'fs';
-import typescript from 'rollup-plugin-typescript2';
-import pkg from './package.json' assert { type: 'json' };
+import typescript from '@rollup/plugin-typescript';
+import pkg from './package.json' with { type: 'json' };
 
 export default [
   {
@@ -19,8 +21,7 @@ export default [
     ],
     plugins: [
       nodeResolve(),
-      typescript(),
-      terser({ mangle: false }),
+      typescript()
     ],
   },
   {
@@ -28,33 +29,36 @@ export default [
     output: [
       {
         file: pkg.browser,
-        format: 'iife',
+        format: 'es',
         sourcemap: false,
       },
     ],
     plugins: [
       nodeResolve({ browser: true }),
       commonjs(),
-      typescript({ tsconfig: './src/client/tsconfig.json' }),
-      terser(),
+      typescript({ tsconfig: './src/client/tsconfig.json', sourceMap: false }),
+      terser({ ie8: true }),
+      getBabelOutputPlugin({
+        babelrc: false,
+        configFile: false,
+        browserslistConfigFile: false,
+        cloneInputAst: false,
+        compact: true,
+        comments: false,
+        plugins: [
+          '@babel/plugin-transform-object-assign'
+        ],
+        presets: [
+          [
+            '@babel/preset-env',
+            {
+              forceAllTransforms: true,
+              ignoreBrowserslistConfig: true,
+              modules: 'umd',
+            },
+          ],
+        ],
+      }),
     ],
   },
-  ...fs.readdirSync('./src/client/commands')
-    .map(basename => ({
-      input: './src/client/commands/' + basename,
-      output: [
-        {
-          file: './dist/commands/' + basename.replace('ts', 'js'),
-          format: 'iife',
-          sourcemap: false,
-          name: 'driver'
-        },
-      ],
-      plugins: [
-        nodeResolve({ browser: true }),
-        commonjs(),
-        typescript({ tsconfig: './src/client/tsconfig.json' }),
-        terser(),
-      ],
-    })),
 ];

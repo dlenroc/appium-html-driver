@@ -1,3 +1,4 @@
+import { describe, it } from 'node:test';
 import { inline, startBrowser } from './_base.js';
 
 describe('getPageSource', () => {

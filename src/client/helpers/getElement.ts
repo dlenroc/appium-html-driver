@@ -1,4 +1,5 @@
 import cssesc from 'cssesc';
+import { InvalidSelector } from '../errors/InvalidSelector.js';
 import { NoSuchElement } from '../errors/NoSuchElement.js';
 import { fromWebDriverElement } from './Element.js';
 
@@ -26,6 +27,8 @@ export function getElement(strategy: string, selector: string, context?: string)
     case 'xpath':
       element = document.evaluate(selector, parent, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue as HTMLElement;
       break;
+    default:
+      throw InvalidSelector(strategy);
   }
 
   if (!element) {

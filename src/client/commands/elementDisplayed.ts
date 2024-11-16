@@ -1,7 +1,7 @@
+import type { Driver } from '../Driver.js';
 import { fromWebDriverElement } from '../helpers/Element.js';
-import { getElementRect } from './getElementRect.js';
 
-export function elementDisplayed(elementId: string): boolean {
+export function elementDisplayed(this: Driver, elementId: string): boolean {
   const element = fromWebDriverElement(elementId);
 
   const style = element.ownerDocument.defaultView?.getComputedStyle(element);
@@ -9,6 +9,6 @@ export function elementDisplayed(elementId: string): boolean {
     return false;
   }
 
-  const rect = getElementRect(elementId);
+  const rect = this.getElementRect(elementId);
   return rect.width > 0 && rect.height > 0;
 }

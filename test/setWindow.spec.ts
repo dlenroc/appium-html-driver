@@ -1,20 +1,19 @@
-import { HOME_PAGE, inline, Mode, MODE, startBrowser } from './_base.js';
+import { describe, it } from 'node:test';
+import { HOME_PAGE, inline, startBrowser } from './_base.js';
 
 describe('setWindow', () => {
   const { driver } = startBrowser();
 
-  if (MODE == Mode.ODC) {
-    it('should switch the current top-level context', async () => {
-      await inline(`
-        <iframe src="${HOME_PAGE}/frame"/>
-      `);
+  it('should switch the current top-level context', async () => {
+    await inline(`
+      <iframe src="${HOME_PAGE}&handle=frame"/>
+    `);
 
-      await driver.switchToWindow('frame');
+    await driver.switchToWindow('frame');
 
-      await driver.getWindowHandle()
-        .should.eventually.be.equal('frame');
-    });
-  }
+    await driver.getWindowHandle()
+      .should.eventually.be.equal('frame');
+  });
 
   it('should throw NoSuchWindowError', async () => {
     await driver.switchToWindow('non-existing')
