@@ -33,5 +33,5 @@ export function setCookie(this: Driver, cookie: Cookie): void {
     newCookie += '; SameSite=' + cookie.sameSite;
   }
 
-  this.currentWindow.document.cookie = newCookie;
+  this.currentContext.document.cookie = newCookie;
 }

@@ -4,7 +4,7 @@ import { NoSuchElement } from '../errors/NoSuchElement.js';
 import { toWebDriverElement } from '../helpers/Element.js';
 
 export function active(this: Driver): Element {
-  const element = this.currentWindow.document.activeElement;
+  const element = this.currentContext.document.activeElement;
 
   if (!element) {
     throw NoSuchElement('no active element');

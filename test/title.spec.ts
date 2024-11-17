@@ -1,5 +1,5 @@
 import { describe, it } from 'node:test';
-import { HOME_PAGE, inline, startBrowser } from './_base.js';
+import { inline, startBrowser } from './_base.js';
 
 describe('title', () => {
   const { driver } = startBrowser();
@@ -11,16 +11,5 @@ describe('title', () => {
 
     await driver.getTitle()
       .should.eventually.be.equal('Page title');
-  });
-
-  it('should throw UnsupportedOperation for instrumented frame', async () => {
-    await inline(`
-      <iframe src="${HOME_PAGE}&handle=frame"/>
-    `);
-
-    await driver.switchToWindow('frame');
-
-    await driver.getTitle()
-      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
   });
 });

@@ -5,7 +5,7 @@ import { fromWebDriver, toWebDriver } from '../helpers/WebDriver.js';
 export function execute(this: Driver, script: string, args: unknown[]): unknown {
   args = args.map(fromWebDriver);
 
-  const fn = new this.currentWindow.window.Function(script) as (...args: unknown[]) => unknown;
+  const fn = new this.currentContext.window.Function(script) as (...args: unknown[]) => unknown;
 
   try {
     return toWebDriver(fn(...args));

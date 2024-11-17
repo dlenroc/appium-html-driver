@@ -5,14 +5,14 @@ import * as Commands from './commands.js';
 import { UnknownError } from './errors/UnknownError.js';
 
 class Driver {
-  protected windows: Window[] = [window];
-
-  get currentWindow() {
-    if (this.windows.length === 0) {
+  protected contexts: Window[] = [window];
+  protected topContext: Window = window;
+  get currentContext() {
+    if (this.contexts.length === 0) {
       throw UnknownError('No window found.');
     }
 
-    return this.windows[this.windows.length - 1];
+    return this.contexts[this.contexts.length - 1];
   }
 }
 

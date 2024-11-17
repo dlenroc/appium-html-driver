@@ -18,11 +18,11 @@ export function setWindowRect(this: Driver, x?: number, y?: number, width?: numb
 
   for (let i = 0; i < 3; i++) {
     if (hasX && hasY) {
-      window.moveTo(x, y);
+      this.topContext.moveTo(x, y);
     }
 
     if (hasWidth && hasHeight) {
-      window.resizeTo(width, height);
+      this.topContext.resizeTo(width, height);
     }
   }
 
