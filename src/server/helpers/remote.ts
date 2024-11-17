@@ -1,20 +1,12 @@
-import { errors } from '@appium/base-driver';
-import type { ExternalDriver } from '@appium/types';
-import type { HtmlDriver } from '../Driver.js';
+import type { Driver as ClientDriver } from '../../client/Driver';
+import type { HtmlDriver } from '../Driver';
 
-export function remote<Command extends keyof ExternalDriver>(
-  command: Command,
-  options: {
-    requireWindow?: boolean;
-    noWait?: boolean;
-  } = {}
-): NonNullable<ExternalDriver[Command]> {
-  return function (this: HtmlDriver, ...args: unknown[]) {
-    if (options.requireWindow && this.socket?.data.type !== 'window') {
-      throw new errors.UnsupportedOperationError(`'${command}' is not supported in frame`);
-    }
+type Commands = {
+  [K in keyof ClientDriver as ClientDriver[K] extends (...args: never[]) => unknown ? K : never]: ClientDriver[K];
+};
 
-    // @ts-expect-error - client & server commands are not yet aligned
+export function remote<T extends keyof Commands>(command: T) {
+  return function (this: HtmlDriver, ...args: Parameters<Commands[T]>) {
     return this.executeRemoteCommand(command, ...args);
-  } as NonNullable<ExternalDriver[Command]>;
+  };
 }

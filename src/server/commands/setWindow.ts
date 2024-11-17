@@ -1,6 +1,5 @@
 import { errors } from '@appium/base-driver';
 import type { HtmlDriver } from '../Driver.js';
-import { remote } from '../helpers/remote.js';
 
 export async function setWindow(this: HtmlDriver, handle: string): Promise<void> {
   const handles = await this.getWindowHandles();
@@ -10,5 +9,5 @@ export async function setWindow(this: HtmlDriver, handle: string): Promise<void>
 
   this.opts.handle = handle;
 
-  await remote('setWindow').call(this, handle);
+  await this.executeRemoteCommand('setWindow');
 }

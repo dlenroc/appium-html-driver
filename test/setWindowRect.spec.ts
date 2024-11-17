@@ -1,5 +1,5 @@
 import { describe, it } from 'node:test';
-import { HOME_PAGE, inline, startBrowser } from './_base.js';
+import { startBrowser } from './_base.js';
 
 describe('setWindowRect', () => {
   const { driver } = startBrowser({ headless: false });
@@ -28,16 +28,5 @@ describe('setWindowRect', () => {
   it('should throw InvalidArgument', async () => {
     await driver.setWindowRect(-1, -1, -1, -1)
       .should.eventually.be.rejected.with.property('name', 'invalid argument');
-  });
-
-  it('should throw UnsupportedOperation for instrumented frame', async () => {
-    await inline(`
-      <iframe src="${HOME_PAGE}&handle=frame"/>
-    `);
-
-    await driver.switchToWindow('frame');
-
-    await driver.setWindowRect(rect.x, rect.y, rect.width, rect.height)
-      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
   });
 });

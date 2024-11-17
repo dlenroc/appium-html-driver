@@ -7,14 +7,14 @@ export function setValue(this: Driver, text: string | string[], elementId: strin
   text = Array.isArray(text) ? text.join('') : text;
 
   const element = fromWebDriverElement(elementId);
-  const isFocused = this.currentWindow.document.activeElement === element;
+  const isFocused = this.currentContext.document.activeElement === element;
 
   if (!isEditableElement(element)) {
     throw ElementNotInteractable('element is not editable');
   }
 
   if (element.isContentEditable) {
-    const selection = this.currentWindow.getSelection();
+    const selection = this.currentContext.getSelection();
 
     if (!isFocused) {
       element.focus();
@@ -23,7 +23,7 @@ export function setValue(this: Driver, text: string | string[], elementId: strin
     }
 
     if (selection?.rangeCount) {
-      const node = this.currentWindow.document.createTextNode(text);
+      const node = this.currentContext.document.createTextNode(text);
       const range = selection.getRangeAt(0);
       range.deleteContents();
       range.insertNode(node);

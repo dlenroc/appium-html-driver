@@ -3,7 +3,7 @@ import type { Driver as ClientDriver } from '../../../client/Driver';
 import type { HtmlDriver } from '../../Driver';
 
 type Commands = {
-  [K in keyof ClientDriver as ClientDriver[K] extends (...args: unknown[]) => unknown ? K : never]: ClientDriver[K];
+  [K in keyof ClientDriver as ClientDriver[K] extends (...args: never[]) => unknown ? K : never]: ClientDriver[K];
 };
 
 export function executeRemoteCommand<T extends keyof Commands>(this: HtmlDriver, command: T, ...args: Parameters<Commands[T]>): Promise<Awaited<ReturnType<Commands[T]>>> {

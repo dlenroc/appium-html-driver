@@ -7,7 +7,7 @@ import { fromWebDriverElement, WEB_ELEMENT_IDENTIFIER } from '../helpers/Element
 export function setFrame(this: Driver, id: null | number | string | Element): void {
   // switch to main frame
   if (id === null) {
-    this.windows = [window];
+    this.contexts = [window];
     return;
   }
 
@@ -17,21 +17,21 @@ export function setFrame(this: Driver, id: null | number | string | Element): vo
       throw InvalidArgument(`index must be a non-negative integer`);
     }
 
-    const frames = this.currentWindow.frames;
+    const frames = this.currentContext.frames;
     if (id >= frames.length) {
       throw NoSuchFrame(`frame with index ${id} does not exist`);
     }
 
-    this.windows.push(frames[id]);
+    this.contexts.push(frames[id]);
     return;
   }
 
   // switch to frame by name
   if (typeof id === 'string') {
-    const frames = this.currentWindow.frames;
+    const frames = this.currentContext.frames;
     for (let i = 0; i < frames.length; i++) {
       if (frames[i]?.name === id) {
-        this.windows.push(frames[i]);
+        this.contexts.push(frames[i]);
         return;
       }
     }
@@ -46,7 +46,7 @@ export function setFrame(this: Driver, id: null | number | string | Element): vo
       throw NoSuchFrame(`element is not a frame`);
     }
 
-    this.windows.push(element.contentWindow!);
+    this.contexts.push(element.contentWindow!);
     return;
   }
 

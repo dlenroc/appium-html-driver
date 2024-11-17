@@ -23,7 +23,7 @@ import { timeouts } from './commands/timeouts.js';
 import { remote } from './helpers/remote.js';
 
 export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> implements ExternalDriver<typeof capabilitiesConstraints> {
-  private static IO: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, { handle: string; type: string }>;
+  private static IO: Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, { handle: string }>;
 
   static async updateServer(app: Application, server: HttpServer) {
     const log = logger.getLogger('HtmlDriver-Server');
@@ -49,7 +49,7 @@ export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> imple
         res.end(client.replaceAll('<appium-html-driver-udid>', udid).replaceAll('<appium-html-driver-handle>', handle));
       });
 
-    HtmlDriver.IO = new Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, { handle: string; type: string }>(server, {
+    HtmlDriver.IO = new Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, { handle: string }>(server, {
       path: '/appium-html-driver/ws',
       serveClient: false,
       cors: { origin: '*' },
@@ -63,7 +63,6 @@ export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> imple
 
       if (!socket.recovered) {
         socket.data.handle = typeof socket.handshake.query.handle === 'string' ? socket.handshake.query.handle.trim() : randomUUID();
-        socket.data.type = typeof socket.handshake.query.type === 'string' ? socket.handshake.query.type.trim() : 'window';
       }
 
       log.info('Socket "%s" (%s) connected to "%s"', socket.data.handle, socket.id, udid);
@@ -98,12 +97,12 @@ export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> imple
   // WebDriver Commands
   public getTimeouts = getTimeouts;
   public timeouts = timeouts;
-  public setUrl = remote('setUrl', { requireWindow: true, noWait: true });
-  public getUrl = remote('getUrl', { requireWindow: true });
-  public back = remote('back', { requireWindow: true, noWait: true });
-  public forward = remote('forward', { requireWindow: true, noWait: true });
-  public refresh = remote('refresh', { requireWindow: true, noWait: true });
-  public title = remote('title', { requireWindow: true });
+  public setUrl = remote('setUrl');
+  public getUrl = remote('getUrl');
+  public back = remote('back');
+  public forward = remote('forward');
+  public refresh = remote('refresh');
+  public title = remote('title');
   public getWindowHandle = getWindowHandle;
   public closeWindow = closeWindow;
   public createNewWindow = createNewWindow;
@@ -111,10 +110,11 @@ export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> imple
   public getWindowHandles = getWindowHandles;
   public setFrame = remote('setFrame');
   public switchToParentFrame = remote('switchToParentFrame');
-  public getWindowRect = remote('getWindowRect', { requireWindow: true });
-  public setWindowRect = remote('setWindowRect', { requireWindow: true });
-  public maximizeWindow = remote('maximizeWindow', { requireWindow: true });
+  public getWindowRect = remote('getWindowRect');
+  public setWindowRect = remote('setWindowRect');
+  public maximizeWindow = remote('maximizeWindow');
   public active = remote('active');
+  // @ts-expect-error - improve typing
   public findElOrEls = remote('findElOrEls');
   public elementSelected = remote('elementSelected');
   public getAttribute = remote('getAttribute');

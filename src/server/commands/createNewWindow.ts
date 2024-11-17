@@ -1,11 +1,10 @@
 import { errors } from '@appium/base-driver';
 import type { NewWindow, NewWindowType } from '@appium/types';
 import type { HtmlDriver } from '../Driver.js';
-import { remote } from '../helpers/remote.js';
 import { retrying } from '../helpers/retrying.js';
 
 export async function createNewWindow(this: HtmlDriver, type: NewWindowType): Promise<NewWindow> {
-  const window = await remote('createNewWindow', { requireWindow: true }).call(this, type);
+  const window = await this.executeRemoteCommand('createNewWindow', type);
 
   await retrying({
     timeout: this.socketTimeoutMs,

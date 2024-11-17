@@ -1,5 +1,5 @@
 import { describe, it } from 'node:test';
-import { HOME_PAGE, inline, startBrowser } from './_base.js';
+import { startBrowser } from './_base.js';
 
 describe('getWindowRect', () => {
   const { driver } = startBrowser();
@@ -16,16 +16,5 @@ describe('getWindowRect', () => {
 
     await driver.getWindowRect()
       .should.eventually.be.eql(rect);
-  });
-
-  it('should throw UnsupportedOperation for instrumented frame', async () => {
-    await inline(`
-      <iframe src="${HOME_PAGE}&handle=frame"/>
-    `);
-
-    await driver.switchToWindow('frame');
-
-    await driver.getWindowRect()
-      .should.eventually.be.rejected.with.property('name', 'unsupported operation');
   });
 });

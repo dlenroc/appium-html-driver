@@ -1,5 +1,5 @@
 import type { Driver } from '../Driver';
 
 export function closeWindow(this: Driver): void {
-  this.currentWindow.close();
+  this.topContext.close();
 }
