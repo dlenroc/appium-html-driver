@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.1](https://github.com/dlenroc/appium-html-driver/compare/v0.1.0...v0.1.1) (2024-11-17)
+
+
+### Features
+
+* treat instrumented context as top-level browsing context ([9428aa3](https://github.com/dlenroc/appium-html-driver/commit/9428aa32ebfeb491a1e61c24656b66a0a581cf6b))
+
 ## [0.1.0](https://github.com/dlenroc/appium-html-driver/compare/v0.0.4...v0.1.0) (2024-11-16)
 
 
