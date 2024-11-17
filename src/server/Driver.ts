@@ -45,7 +45,9 @@ export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> imple
       .get('/appium-html-driver/js', (req, res) => {
         const { handle, udid } = getParams(req);
         res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
         res.setHeader('Content-Type', 'text/javascript');
+        res.setHeader('Expires', '0');
         res.end(client.replaceAll('<appium-html-driver-udid>', udid).replaceAll('<appium-html-driver-handle>', handle));
       });
 
