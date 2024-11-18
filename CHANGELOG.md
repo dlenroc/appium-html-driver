@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/dlenroc/appium-html-driver/compare/v0.1.1...v0.1.2) (2024-11-18)
+
+
+### Features
+
+* on-screen display for connection status ([0c49d88](https://github.com/dlenroc/appium-html-driver/commit/0c49d880d6c1d6cbcfcb39c7c5eeb877bdfac7ce))
+
 ## [0.1.1](https://github.com/dlenroc/appium-html-driver/compare/v0.1.0...v0.1.1) (2024-11-17)
 
 
