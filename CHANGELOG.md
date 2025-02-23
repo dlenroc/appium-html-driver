@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/dlenroc/appium-html-driver/compare/v0.1.2...v0.1.3) (2025-02-23)
+
+
+### Bug Fixes
+
+* drop iterator helpers usage ([6298da7](https://github.com/dlenroc/appium-html-driver/commit/6298da78db99a20488a0d87a10f56749359ddadd))
+
 ## [0.1.2](https://github.com/dlenroc/appium-html-driver/compare/v0.1.1...v0.1.2) (2024-11-18)
 
 
