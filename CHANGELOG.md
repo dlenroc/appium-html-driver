@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://github.com/dlenroc/appium-html-driver/compare/v0.1.3...v0.2.0) (2025-03-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* use UUID as fallback and escape params properly
+
+### Features
+
+* use UUID as fallback and escape params properly ([16c6d2d](https://github.com/dlenroc/appium-html-driver/commit/16c6d2d4a34ac8bedd4609211ebbd64b57e4aa98))
+
 ## [0.1.3](https://github.com/dlenroc/appium-html-driver/compare/v0.1.2...v0.1.3) (2025-02-23)
 
 
