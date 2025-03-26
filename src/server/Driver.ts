@@ -27,28 +27,39 @@ export class HtmlDriver extends BaseDriver<typeof capabilitiesConstraints> imple
 
   static async updateServer(app: Application, server: HttpServer) {
     const log = logger.getLogger('HtmlDriver-Server');
-
     const client = await fs.readFile(path.resolve(new URL(import.meta.url + '/..').pathname, './client.js'), 'utf8');
 
     function getParams(req: Request) {
-      const handle = (typeof req.query.handle === 'string' ? req.query.handle.trim() : '') || randomUUID();
-      const udid = (typeof req.query.udid === 'string' ? req.query.udid.trim() : '') || getClientIp(req) || 'unknown';
+      const handle =
+        (typeof req.query.handle === 'string' ? req.query.handle.trim() : '') ||
+        randomUUID();
+
+      const udid =
+        (typeof req.query.udid === 'string' ? req.query.udid.trim() : '') ||
+        getClientIp(req) ||
+        randomUUID();
+
       return { handle, udid };
     }
 
     app
       .get('/appium-html-driver/home', (req, res) => {
-        const { handle, udid } = getParams(req);
+        const qs = new URLSearchParams(getParams(req));
+        
         res.setHeader('Content-Type', 'text/html');
-        res.end(`<script type="text/javascript" src="./js?udid=${udid}&handle=${handle}"></script>`);
+        res.end(`<script type="text/javascript" src="./js?${qs}"></script>`);
       })
       .get('/appium-html-driver/js', (req, res) => {
         const { handle, udid } = getParams(req);
+        
         res.setHeader('Access-Control-Allow-Origin', '*');
-        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Cache-Control', 'no-store');
         res.setHeader('Content-Type', 'text/javascript');
-        res.setHeader('Expires', '0');
-        res.end(client.replaceAll('<appium-html-driver-udid>', udid).replaceAll('<appium-html-driver-handle>', handle));
+        res.send(
+          client
+            .replace(/\bwindow.APPIUM_HTML_DRIVER_UDID\b/g, JSON.stringify(udid))
+            .replace(/\bwindow.APPIUM_HTML_DRIVER_HANDLE\b/g, JSON.stringify(handle))
+        );
       });
 
     HtmlDriver.IO = new Server<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, { handle: string }>(server, {
