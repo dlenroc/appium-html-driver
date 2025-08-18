@@ -21,7 +21,7 @@ appium driver install --source npm @dlenroc/appium-html-driver
    Where:
 
    - origin - address of the Appium server, for example: `http://192.168.0.2:4723`.
-   - udid _(optional)_ - identifier that represent your device, default to client's IP address.
+   - udid _(optional)_ - identifier that represents your device; defaults to the client's IP address.
    - handle _(optional)_ - identifier that will represent the window handle.
 
 2. Attach and run test
@@ -38,7 +38,7 @@ appium driver install --source npm @dlenroc/appium-html-driver
    /**
     * Load instrumented page manually, via cli or in any other way
     *
-    * NOTE: that is not driver's responsibility
+    * NOTE: that is not the driver's responsibility
     */
 
    // Attach to target
@@ -77,7 +77,7 @@ appium driver install --source npm @dlenroc/appium-html-driver
 | [execute](src/client/commands/execute.ts)                         | Execute script             |
 | [executeAsync](src/client/commands/executeAsync.ts)               | Execute async script       |
 | [findElement](src/client/commands/findElOrEls.ts)                 | Find element               |
-| [findElementFromElement](src/client/commands/findElOrEls.ts)      | Find element form element  |
+| [findElementFromElement](src/client/commands/findElOrEls.ts)      | Find element from element  |
 | [findElements](src/client/commands/findElOrEls.ts)                | Find elements              |
 | [findElementsFromElement](src/client/commands/findElOrEls.ts)     | Find elements from element |
 | [forward](src/client/commands/forward.ts)                         | Forward                    |
