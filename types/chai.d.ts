@@ -9,3 +9,7 @@ declare namespace Chai {
   interface PromisedInclude extends Chai.ArrayInclude {}
   interface ArrayAssertion extends Chai.Assertion {}
 }
+
+interface Promise<T> extends Chai.PromisedAssertion {
+  should: Chai.PromisedAssertion
+}
