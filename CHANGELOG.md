@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://github.com/dlenroc/appium-html-driver/compare/v0.2.0...v0.3.0) (2025-08-18)
+
+
+### ⚠ BREAKING CHANGES
+
+* Drop Node.js 18, 19, <22.12.0, and 23 to meet Appium requirements.
+
+### Features
+
+* support Appium v3 ([60ae6ea](https://github.com/dlenroc/appium-html-driver/commit/60ae6ea2b1e749ae449b591e08a1ef78a649d42d))
+
 ## [0.2.0](https://github.com/dlenroc/appium-html-driver/compare/v0.1.3...v0.2.0) (2025-03-26)
 
 
