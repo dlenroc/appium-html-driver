@@ -1,6 +1,6 @@
 {
   "name": "@dlenroc/appium-html-driver",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "WebDriver for testing HTML applications",
   "author": "Corneliu Duplachi",
   "repository": "dlenroc/appium-html-driver",
